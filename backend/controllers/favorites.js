@@ -3,6 +3,7 @@ const categories = models.categories;
 const events = models.events;
 const users = models.users;
 const favorites = models.favorites;
+const { newFavorites } = require("../helpers/functions");
 
 exports.favorites = (req, res) => {
   favorites
@@ -13,7 +14,17 @@ exports.favorites = (req, res) => {
       include: [
         {
           model: events,
-          as: "event"
+          as: "event",
+          include: [
+            {
+              model: categories,
+              as: "category"
+            },
+            {
+              model: users,
+              as: "user"
+            }
+          ]
         },
         {
           model: users,
@@ -22,6 +33,6 @@ exports.favorites = (req, res) => {
       ]
     })
     .then(result => {
-      res.status(200).json(result);
+      res.status(200).json(newFavorites(result));
     });
 };

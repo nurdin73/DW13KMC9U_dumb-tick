@@ -5,7 +5,7 @@ const users = models.users;
 
 const Sequelize = require("sequelize");
 const Op = Sequelize.Op;
-const { Events } = require("../helpers/functions");
+const { Events, formatDate, formatRupiah } = require("../helpers/functions");
 exports.index = (req, res) => {
   events
     .findAll({
@@ -100,9 +100,9 @@ exports.detail = (req, res) => {
             id: data.category.id,
             name: data.category.name
           },
-          startTime: data.startTime,
-          endTime: data.endTime,
-          price: data.price,
+          startTime: formatDate(data.startTime),
+          endTime: formatDate(data.endTime),
+          price: formatRupiah(data.price),
           description: data.description,
           address: data.address,
           urlMaps: data.urlMap,
@@ -180,9 +180,9 @@ exports.post = (req, res) => {
                         id: category.id,
                         name: category.name
                       },
-                      startTime: data.startTime,
-                      endTime: data.endTime,
-                      price: data.price,
+                      startTime: formatDate(data.startTime),
+                      endTime: formatDate(data.endTime),
+                      price: formatRupiah(data.price),
                       description: data.description,
                       address: data.address,
                       urlMaps: data.urlMap,

@@ -1,12 +1,23 @@
 exports.formatDate = date => {
   let hours = date.getHours();
   let minutes = date.getMinutes();
-  let ampm = hours >= 12 ? "pm" : "am";
-  hours = hours % 12;
-  hours = hours ? hours : 12;
+  let seconds = date.getSeconds();
   minutes = minutes < 10 ? "0" + minutes : minutes;
-  let strTime = hours + ":" + " " + ampm;
-  return date.getFullYear() + "-" + date.getMonth() + "-" + date.getDate();
+  seconds = seconds < 10 ? "0" + seconds : seconds;
+  hours = hours < 10 ? "0" + hours : hours;
+  return (
+    date.getFullYear() +
+    "-" +
+    date.getMonth() +
+    "-" +
+    date.getDate() +
+    " " +
+    hours +
+    ":" +
+    minutes +
+    ":" +
+    seconds
+  );
 };
 
 exports.formatRupiah = angka => {
@@ -42,12 +53,23 @@ const formatRupiah = angka => {
 const formatDate = date => {
   let hours = date.getHours();
   let minutes = date.getMinutes();
-  let ampm = hours >= 12 ? "pm" : "am";
-  hours = hours % 12;
-  hours = hours ? hours : 12;
+  let seconds = date.getSeconds();
   minutes = minutes < 10 ? "0" + minutes : minutes;
-  let strTime = hours + ":" + " " + ampm;
-  return date.getFullYear() + "-" + date.getMonth() + "-" + date.getDate();
+  seconds = seconds < 10 ? "0" + seconds : seconds;
+  hours = hours < 10 ? "0" + hours : hours;
+  return (
+    date.getFullYear() +
+    "-" +
+    date.getMonth() +
+    "-" +
+    date.getDate() +
+    " " +
+    hours +
+    ":" +
+    minutes +
+    ":" +
+    seconds
+  );
 };
 
 exports.Events = data => {
@@ -112,4 +134,33 @@ exports.newPayments = data => {
     return newItem;
   });
   return newPayment;
+};
+
+exports.newFavorites = data => {
+  const newFavorite = data.map(item => {
+    let newItems = {
+      id: item.event.id,
+      title: item.event.title,
+      category: {
+        id: item.event.category.id,
+        name: item.event.category.name
+      },
+      startTime: formatDate(item.event.startTime),
+      endTime: formatDate(item.event.endTime),
+      price: formatRupiah(item.event.price),
+      description: item.event.description,
+      address: item.event.address,
+      urlMap: item.event.urlMap,
+      image: item.event.image,
+      createdBy: {
+        id: item.event.user.id,
+        name: item.event.user.name,
+        email: item.event.user.email,
+        phone: item.event.user.phone,
+        image: item.event.user.image
+      }
+    };
+    return newItems;
+  });
+  return newFavorite;
 };

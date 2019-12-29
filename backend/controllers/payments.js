@@ -3,7 +3,11 @@ const categories = models.categories;
 const events = models.events;
 const users = models.users;
 const payments = models.payments;
-const { newPayments } = require("../helpers/functions");
+const {
+  newPayments,
+  formatDate,
+  formatRupiah
+} = require("../helpers/functions");
 
 exports.post = (req, res) => {
   events
@@ -53,9 +57,9 @@ exports.post = (req, res) => {
                     id: event.category.id,
                     name: event.category.name
                   },
-                  startTime: event.startTime,
-                  endTime: event.endTime,
-                  price: event.price,
+                  startTime: formatDate(event.startTime),
+                  endTime: formatDate(event.endTime),
+                  price: formatRupiah(event.price),
                   description: event.description,
                   address: event.address,
                   urlMaps: event.urlMap,
@@ -140,9 +144,9 @@ exports.confirm = (req, res) => {
                           id: event.category.id,
                           name: event.category.name
                         },
-                        startTime: event.startTime,
-                        endTime: event.endTime,
-                        price: event.price,
+                        startTime: formatDate(event.startTime),
+                        endTime: formatDate(event.endTime),
+                        price: formatRupiah(event.price),
                         description: event.description,
                         address: event.address,
                         urlMaps: event.urlMap,
@@ -156,7 +160,7 @@ exports.confirm = (req, res) => {
                         }
                       },
                       quantity: payment.quantity,
-                      totalPrice: payment.totalPrice,
+                      totalPrice: formatRupiah(payment.totalPrice),
                       attachment: payment.attachment,
                       status: req.body.status
                     });
