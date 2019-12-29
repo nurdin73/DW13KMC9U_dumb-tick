@@ -129,6 +129,7 @@ function ButtonAppBar(props) {
   const { login } = props.login;
   if (login.message === "success") {
     localStorage.setItem("token", login.token);
+    window.location.href = "http://localhost:3000";
   }
   return (
     <div className={classes.root}>
