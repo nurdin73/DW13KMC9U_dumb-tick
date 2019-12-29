@@ -3,6 +3,7 @@ const categories = models.categories;
 const events = models.events;
 const users = models.users;
 const payments = models.payments;
+const { newPayments } = require("../helpers/functions");
 
 exports.post = (req, res) => {
   events
@@ -167,42 +168,6 @@ exports.confirm = (req, res) => {
     });
 };
 
-const newPayments = data => {
-  const newPayment = data.map(item => {
-    let newItem = {
-      id: item.id,
-      event: {
-        id: item.event.id,
-        title: item.event.title,
-        category: {
-          id: item.event.category.id,
-          name: item.event.category.name
-        },
-        startTime: item.event.startTime,
-        endTime: item.event.endTime,
-        price: item.event.price,
-        description: item.event.description,
-        address: item.event.address,
-        urlMap: item.event.urlMap,
-        image: item.event.image,
-        createdBy: {
-          id: item.event.user.id,
-          name: item.event.user.name,
-          phone: item.event.user.phone,
-          email: item.event.user.email,
-          image: item.event.user.image
-        }
-      },
-      quantity: item.quantity,
-      totalPrice: item.totalPrice,
-      status: item.status,
-      attachment: item.attachment
-    };
-    return newItem;
-  });
-  return newPayment;
-};
-
 exports.approved = (req, res) => {
   payments
     .findAll({
@@ -237,32 +202,3 @@ exports.approved = (req, res) => {
       }
     });
 };
-// {
-//   id: data.id,
-//   event: {
-//     id: data.event.id,
-//     title: data.event.title,
-//     category: {
-//       id: data.event.category.id,
-//       name: data.event.category.name
-//     },
-//     startTime: data.event.startTime,
-//     endTime: data.event.endTime,
-//     price: data.event.price,
-//     description: data.event.description,
-//     address: data.event.address,
-//     urlMap: data.event.urlMap,
-//     image: data.event.image,
-//     createdBy: {
-//       id: data.event.user.id,
-//       name: data.event.user.name,
-//       phone: data.event.user.phone,
-//       email: data.event.user.email,
-//       image: data.event.user.image
-//     }
-//   },
-//   quantity: data.quantity,
-//   totalPrice: data.totalPrice,
-//   status: data.status,
-//   attachment: data.attachment
-// }

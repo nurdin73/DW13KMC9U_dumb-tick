@@ -23,11 +23,6 @@ module.exports = (sequelize, DataTypes) => {
       as: "buyer",
       foreignKey: "buyer_id"
     });
-    users.belongsToMany(models.events, {
-      through: "favorites",
-      as: "events",
-      foreignKey: "event_id"
-    });
   };
   return users;
 };

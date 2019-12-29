@@ -10,13 +10,11 @@ import { Container, TextField } from "@material-ui/core";
 import Dialog from "@material-ui/core/Dialog";
 import MuiDialogTitle from "@material-ui/core/DialogTitle";
 import MuiDialogContent from "@material-ui/core/DialogContent";
-import MuiDialogActions from "@material-ui/core/DialogActions";
 import CloseIcon from "@material-ui/icons/Close";
 import { Link } from "react-router-dom";
-import InputLabel from "@material-ui/core/InputLabel";
-import MenuItem from "@material-ui/core/MenuItem";
-import FormControl from "@material-ui/core/FormControl";
-import Select from "@material-ui/core/Select";
+import { setLog } from "../_actions/user";
+import { connect } from "react-redux";
+import Axios from "axios";
 const styles = theme => ({
   root: {
     margin: 0,
@@ -54,13 +52,6 @@ const DialogContent = withStyles(theme => ({
   }
 }))(MuiDialogContent);
 
-const DialogActions = withStyles(theme => ({
-  root: {
-    margin: 0,
-    padding: theme.spacing(1)
-  }
-}))(MuiDialogActions);
-
 const useStyles = makeStyles(theme => ({
   root: {
     flexGrow: 1
@@ -73,10 +64,33 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function ButtonAppBar() {
+function ButtonAppBar() {
   const classes = useStyles();
   const [openLogin, setOpenLogin] = React.useState(false);
   const [openRegister, setOpenRegister] = React.useState(false);
+
+  const [Login, setLogin] = React.useState({
+    username: "",
+    password: ""
+  });
+
+  const handleChangeUsername = event => {
+    setLogin({
+      ...Login,
+      username: event.target.value
+    });
+  };
+
+  const handleChangePassword = event => {
+    setLogin({
+      ...Login,
+      password: event.target.value
+    });
+  };
+
+  const handleSubmit = prop => () => {
+    [prop].getLog(this.props.username, this.props.password);
+  };
 
   const handleClickOpen = () => {
     setOpenLogin(true);
@@ -136,29 +150,34 @@ export default function ButtonAppBar() {
           Login
         </DialogTitle>
         <DialogContent dividers style={{ width: "500px" }}>
-          <from>
+          <form onSubmit={handleSubmit} method="post">
             <TextField
               id="standard-basic"
               type="text"
               label="Username"
               fullWidth
               style={{ marginBottom: "30px" }}
+              value={Login.username}
+              onChange={handleChangeUsername}
             />
             <TextField
               id="standard-basic"
               label="Password"
               type="password"
               fullWidth
+              value={Login.password}
+              onChange={handleChangePassword}
             />
             <Button
               fullWidth
               variant="contained"
               color="secondary"
               style={{ marginTop: "20px" }}
+              onClick={handleSubmit}
             >
               Login
             </Button>
-          </from>
+          </form>
         </DialogContent>
       </Dialog>
       <Dialog
@@ -170,7 +189,7 @@ export default function ButtonAppBar() {
           Register
         </DialogTitle>
         <DialogContent dividers>
-          <from>
+          <from method="post">
             <TextField
               id="standard-basic"
               type="text"
@@ -199,17 +218,6 @@ export default function ButtonAppBar() {
               fullWidth
               style={{ marginBottom: "30px" }}
             />
-            <FormControl fullWidth>
-              <InputLabel id="demo-simple-select-label">Age</InputLabel>
-              <Select
-                labelId="demo-simple-select-label"
-                id="demo-simple-select"
-                fullWidth
-              >
-                <MenuItem value={1}>Event Organizer</MenuItem>
-                <MenuItem value={2}>Pembeli</MenuItem>
-              </Select>
-            </FormControl>
             <Button
               fullWidth
               variant="contained"
@@ -220,12 +228,24 @@ export default function ButtonAppBar() {
             </Button>
           </from>
         </DialogContent>
-        <DialogActions>
-          <Button autoFocus onClick={handleClose1} color="primary">
-            Save changes
-          </Button>
-        </DialogActions>
       </Dialog>
     </div>
   );
 }
+
+const mapStateToProps = (state, ownProps) => {
+  return {
+    username: state.username,
+    password: state.password
+  };
+};
+
+const mapDispatchToProps = (dispatch, ownProps) => {
+  return {
+    setLog: (username, password) => {
+      dispatch(setLog(username, password));
+    }
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ButtonAppBar);

@@ -1,6 +1,8 @@
 const models = require("../models");
 const categories = models.categories;
 const events = models.events;
+const users = models.users;
+const { Events } = require("../helpers/functions");
 
 exports.index = (req, res) => {
   categories.findAll({}).then(data => {
@@ -24,6 +26,10 @@ exports.category = (req, res) => {
           where: {
             id: req.params.id
           }
+        },
+        {
+          model: users,
+          as: "user"
         }
       ]
     })
@@ -38,7 +44,7 @@ exports.category = (req, res) => {
             message: "no event in this category"
           });
         } else {
-          res.status(200).json(data);
+          res.status(200).json(Events(data));
         }
       }
     });

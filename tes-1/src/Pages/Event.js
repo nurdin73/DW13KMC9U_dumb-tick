@@ -23,6 +23,7 @@ class App extends Component {
   }
   render() {
     const { event } = this.props.event;
+    console.log(this.props.event, "ini event");
     return (
       <div>
         <Header />

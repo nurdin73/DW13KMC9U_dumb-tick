@@ -44,7 +44,7 @@ class App extends Component {
                           right: "10px"
                         }}
                       >
-                        Rp.{item.price},-
+                        {item.price}
                       </Button>
                       <CardMedia
                         component="img"

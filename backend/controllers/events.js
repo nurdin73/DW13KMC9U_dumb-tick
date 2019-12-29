@@ -5,8 +5,7 @@ const users = models.users;
 
 const Sequelize = require("sequelize");
 const Op = Sequelize.Op;
-var d = new Date();
-var n = d.getTimezoneOffset();
+const { Events } = require("../helpers/functions");
 exports.index = (req, res) => {
   events
     .findAll({
@@ -37,7 +36,7 @@ exports.index = (req, res) => {
     })
     .then(data => {
       if (data.length > 0) {
-        res.status(200).json(data);
+        res.status(200).json(Events(data));
       } else {
         res.status(200).json({
           message: "event not founds"
@@ -61,7 +60,7 @@ exports.all = (req, res) => {
     })
     .then(data => {
       if (data.length > 0) {
-        res.status(200).json(data);
+        res.status(200).json(Events(data));
       } else {
         res.status(200).json({
           message: "event not founds"

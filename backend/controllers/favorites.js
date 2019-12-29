@@ -9,21 +9,18 @@ exports.favorites = (req, res) => {
     .findAll({
       where: {
         user_id: req.params.user_id
-      }
+      },
+      include: [
+        {
+          model: events,
+          as: "event"
+        },
+        {
+          model: users,
+          as: "user"
+        }
+      ]
     })
-    //   events
-    //     .findAll({
-    //       include: [
-    //         {
-    //           model: users,
-    //           as: "user",
-    //           where: {
-    //             id: req.params.user_id
-    //           }
-    //         }
-    //       ],
-    //       through: favorites
-    //     })
     .then(result => {
       res.status(200).json(result);
     });
