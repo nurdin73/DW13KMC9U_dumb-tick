@@ -53,7 +53,7 @@ class App extends Component {
                   size="medium"
                   style={{ fontWeight: "bold" }}
                 >
-                  Rp.{event.price},-
+                  {event.price}
                 </Button>
               </div>
               <Typography

@@ -62,7 +62,7 @@ exports.register = (req, res) => {
                           if (data) {
                             const token = jwt.sign({ id: data.id }, "nurdin");
                             res.status(200).json({
-                              msg: "success",
+                              message: "success",
                               token: token
                             });
                           } else {

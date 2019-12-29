@@ -34,10 +34,24 @@ class Home extends Component {
   render() {
     const { data } = this.props.categories;
     const { events } = this.props.events;
+    const { login } = this.props.login;
     return (
       <div>
         <Header />
         <Container style={{ marginTop: "50px" }}>
+          <div
+            style={{
+              backgroundColor: "rgb(245, 0, 87)",
+              padding: "10px",
+              borderRadius: "6px",
+              color: "#fff",
+              fontWeight: "bold",
+              fontSize: "20px",
+              marginBottom: "50px"
+            }}
+          >
+            <Typography>{login.message}</Typography>
+          </div>
           <form method="get" action="/events" autoComplete="off">
             <FormControl fullWidth>
               <Input
@@ -122,7 +136,7 @@ class Home extends Component {
                           right: "10px"
                         }}
                       >
-                        Rp.{event.price},-
+                        {event.price}
                       </Button>
                       <CardMedia
                         component="img"
@@ -168,7 +182,8 @@ class Home extends Component {
 const mapStateToProps = state => {
   return {
     categories: state.categories,
-    events: state.events
+    events: state.events,
+    login: state.login
   };
 };
 

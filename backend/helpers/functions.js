@@ -19,6 +19,9 @@ exports.formatDate = date => {
     seconds
   );
 };
+exports.formatTime = date => {
+  return date.getFullYear() + "-" + date.getMonth() + "-" + date.getDate();
+};
 
 exports.formatRupiah = angka => {
   var reverse = angka

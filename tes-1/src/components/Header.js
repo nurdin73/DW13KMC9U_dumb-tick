@@ -6,15 +6,24 @@ import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import IconButton from "@material-ui/core/IconButton";
-import { Container, TextField } from "@material-ui/core";
+import {
+  Container,
+  FormControl,
+  InputLabel,
+  Input,
+  FormHelperText
+} from "@material-ui/core";
 import Dialog from "@material-ui/core/Dialog";
 import MuiDialogTitle from "@material-ui/core/DialogTitle";
 import MuiDialogContent from "@material-ui/core/DialogContent";
 import CloseIcon from "@material-ui/icons/Close";
+import Visibility from "@material-ui/icons/Visibility";
+import VisibilityOff from "@material-ui/icons/VisibilityOff";
+import InputAdornment from "@material-ui/core/InputAdornment";
 import { Link } from "react-router-dom";
-import { setLog } from "../_actions/user";
 import { connect } from "react-redux";
-import Axios from "axios";
+import { useForm } from "react-hook-form";
+import { setUsers, setLogin } from "../_actions/user";
 const styles = theme => ({
   root: {
     margin: 0,
@@ -64,32 +73,28 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-function ButtonAppBar() {
+function ButtonAppBar(props) {
   const classes = useStyles();
   const [openLogin, setOpenLogin] = React.useState(false);
   const [openRegister, setOpenRegister] = React.useState(false);
 
-  const [Login, setLogin] = React.useState({
-    username: "",
-    password: ""
+  const { register, handleSubmit, errors } = useForm();
+
+  const [values, setValues] = React.useState({
+    password: "",
+    showPassword: false
   });
 
-  const handleChangeUsername = event => {
-    setLogin({
-      ...Login,
-      username: event.target.value
-    });
+  const handleChange = prop => event => {
+    setValues({ ...values, [prop]: event.target.value });
   };
 
-  const handleChangePassword = event => {
-    setLogin({
-      ...Login,
-      password: event.target.value
-    });
+  const handleClickShowPassword = () => {
+    setValues({ ...values, showPassword: !values.showPassword });
   };
 
-  const handleSubmit = prop => () => {
-    [prop].getLog(this.props.username, this.props.password);
+  const handleMouseDownPassword = event => {
+    event.preventDefault();
   };
 
   const handleClickOpen = () => {
@@ -105,6 +110,26 @@ function ButtonAppBar() {
     setOpenRegister(false);
   };
 
+  // integrate global state
+  const onSubmit = (data, e) => {
+    e.target.reset();
+    props.setUsers(data);
+  };
+  const onSubmitLogin = (data, e) => {
+    e.target.reset();
+    props.setLogin(data);
+  };
+  const { signUp } = props.signUp;
+  if (signUp.message === "success") {
+    localStorage.setItem("token", signUp.token);
+    window.location.href = "http://localhost:3000";
+  }
+
+  // login
+  const { login } = props.login;
+  if (login.message === "success") {
+    localStorage.setItem("token", login.token);
+  }
   return (
     <div className={classes.root}>
       <AppBar position="static" color="secondary">
@@ -150,30 +175,66 @@ function ButtonAppBar() {
           Login
         </DialogTitle>
         <DialogContent dividers style={{ width: "500px" }}>
-          <form onSubmit={handleSubmit} method="post">
-            <TextField
-              id="standard-basic"
-              type="text"
-              label="Username"
-              fullWidth
-              style={{ marginBottom: "30px" }}
-              value={Login.username}
-              onChange={handleChangeUsername}
-            />
-            <TextField
-              id="standard-basic"
-              label="Password"
-              type="password"
-              fullWidth
-              value={Login.password}
-              onChange={handleChangePassword}
-            />
+          <form autoComplete="off" onSubmit={handleSubmit(onSubmitLogin)}>
+            <FormControl fullWidth style={{ marginBottom: "15px" }}>
+              <InputLabel htmlFor="username">Username</InputLabel>
+              <Input
+                id="username"
+                name="username"
+                aria-describedby="my-helper-username"
+                inputRef={register({
+                  required: "Required",
+                  minLength: {
+                    value: 5,
+                    message: "Your username too short"
+                  }
+                })}
+              />
+              <FormHelperText id="my-helper-username">
+                {errors.username && errors.username.message}
+              </FormHelperText>
+            </FormControl>
+
+            <FormControl fullWidth style={{ marginBottom: "15px" }}>
+              <InputLabel htmlFor="standard-adornment-password">
+                Password
+              </InputLabel>
+              <Input
+                id="standard-adornment-password"
+                type={values.showPassword ? "text" : "password"}
+                name="password"
+                // value={values.password}
+                onChange={handleChange("password")}
+                inputRef={register({
+                  required: "Required",
+                  minLength: {
+                    value: 8,
+                    message: "Your password too short"
+                  }
+                })}
+                endAdornment={
+                  <InputAdornment position="end">
+                    <IconButton
+                      aria-label="toggle password visibility"
+                      onClick={handleClickShowPassword}
+                      onMouseDown={handleMouseDownPassword}
+                    >
+                      {values.showPassword ? <Visibility /> : <VisibilityOff />}
+                    </IconButton>
+                  </InputAdornment>
+                }
+              />
+              <FormHelperText id="my-helper-username">
+                {errors.password && errors.password.message}
+              </FormHelperText>
+            </FormControl>
             <Button
-              fullWidth
               variant="contained"
+              size="medium"
               color="secondary"
-              style={{ marginTop: "20px" }}
-              onClick={handleSubmit}
+              fullWidth
+              type="submit"
+              onClick={handleClose}
             >
               Login
             </Button>
@@ -188,45 +249,128 @@ function ButtonAppBar() {
         <DialogTitle id="customized-dialog-title" onClose={handleClose1}>
           Register
         </DialogTitle>
-        <DialogContent dividers>
-          <from method="post">
-            <TextField
-              id="standard-basic"
-              type="text"
-              label="Name"
-              fullWidth
-              style={{ marginBottom: "30px" }}
-            />
-            <TextField
-              id="standard-basic"
-              type="text"
-              label="Email"
-              fullWidth
-              style={{ marginBottom: "30px" }}
-            />
-            <TextField
-              id="standard-basic"
-              type="number"
-              label="Phone"
-              fullWidth
-              style={{ marginBottom: "30px" }}
-            />
-            <TextField
-              id="standard-basic"
-              label="Password"
-              type="password"
-              fullWidth
-              style={{ marginBottom: "30px" }}
-            />
+        <DialogContent dividers style={{ width: "500px" }}>
+          <form autoComplete="off" onSubmit={handleSubmit(onSubmit)}>
+            <FormControl fullWidth style={{ marginBottom: "15px" }}>
+              <InputLabel htmlFor="name">Name</InputLabel>
+              <Input
+                id="name"
+                name="name"
+                aria-describedby="my-helper-name"
+                inputRef={register({
+                  required: "required"
+                })}
+              />
+              <FormHelperText id="my-helper-username">
+                {errors.name && errors.name.message}
+              </FormHelperText>
+            </FormControl>
+
+            <FormControl fullWidth style={{ marginBottom: "15px" }}>
+              <InputLabel htmlFor="email">Email</InputLabel>
+              <Input
+                id="email"
+                name="email"
+                aria-describedby="my-helper-email"
+                inputRef={register({
+                  required: "Required",
+                  pattern: {
+                    value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
+                    message: "invalid email address"
+                  }
+                })}
+              />
+              <FormHelperText id="my-helper-email">
+                {errors.email && errors.email.message}
+              </FormHelperText>
+            </FormControl>
+
+            <FormControl fullWidth style={{ marginBottom: "15px" }}>
+              <InputLabel htmlFor="phone">Phone Number</InputLabel>
+              <Input
+                id="phone"
+                name="phone"
+                aria-describedby="my-helper-phone"
+                inputRef={register({
+                  required: "Required",
+                  minLength: {
+                    value: 11,
+                    message: "phone number too short (11 key)"
+                  },
+                  pattern: {
+                    value: /\d+/,
+                    message: "Invalid phone number"
+                  }
+                })}
+              />
+              <FormHelperText id="my-helper-email" color="secondary">
+                {errors.phone && errors.phone.message}
+              </FormHelperText>
+            </FormControl>
+
+            <FormControl fullWidth style={{ marginBottom: "15px" }}>
+              <InputLabel htmlFor="username">Username</InputLabel>
+              <Input
+                id="username"
+                name="username"
+                aria-describedby="my-helper-username"
+                inputRef={register({
+                  required: "Required",
+                  minLength: {
+                    value: 5,
+                    message: "Your username too short"
+                  }
+                })}
+              />
+              <FormHelperText id="my-helper-username">
+                {errors.username && errors.username.message}
+              </FormHelperText>
+            </FormControl>
+
+            <FormControl fullWidth style={{ marginBottom: "15px" }}>
+              <InputLabel htmlFor="standard-adornment-password">
+                Password
+              </InputLabel>
+              <Input
+                id="standard-adornment-password"
+                type={values.showPassword ? "text" : "password"}
+                name="password"
+                // value={values.password}
+                onChange={handleChange("password")}
+                inputRef={register({
+                  required: "Required",
+                  minLength: {
+                    value: 8,
+                    message: "Your password too short"
+                  }
+                })}
+                endAdornment={
+                  <InputAdornment position="end">
+                    <IconButton
+                      aria-label="toggle password visibility"
+                      onClick={handleClickShowPassword}
+                      onMouseDown={handleMouseDownPassword}
+                    >
+                      {values.showPassword ? <Visibility /> : <VisibilityOff />}
+                    </IconButton>
+                  </InputAdornment>
+                }
+              />
+              <FormHelperText id="my-helper-username">
+                {errors.password && errors.password.message}
+              </FormHelperText>
+            </FormControl>
             <Button
-              fullWidth
               variant="contained"
+              size="medium"
               color="secondary"
-              style={{ marginTop: "20px" }}
+              fullWidth
+              type="submit"
+              onClick={handleClose1}
             >
               Register
             </Button>
-          </from>
+          </form>
         </DialogContent>
       </Dialog>
     </div>
@@ -235,15 +379,18 @@ function ButtonAppBar() {
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    username: state.username,
-    password: state.password
+    signUp: state.signUp,
+    login: state.login
   };
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
-    setLog: (username, password) => {
-      dispatch(setLog(username, password));
+    setUsers: data => {
+      dispatch(setUsers(data));
+    },
+    setLogin: data => {
+      dispatch(setLogin(data));
     }
   };
 };

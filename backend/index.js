@@ -41,7 +41,7 @@ app.group("/api/v1", router => {
   router.get("/eventAll", eventsControllers.all);
   router.get("/events", eventsControllers.index);
   router.get("/events?title=", eventsControllers.index); // get events by keywords
-  router.get("/events?start_time=", eventsControllers.index); // get events by start time
+  router.get("/events?start_time=", eventsControllers.startDate); // get events by start time
   router.get("/event/:id", eventsControllers.detail); // get event by id
   router.post("/event", authenticated, eventsControllers.post); // post event
   router.patch("/event/:id", authenticated, eventsControllers.patch); // update event

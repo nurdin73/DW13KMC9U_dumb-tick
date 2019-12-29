@@ -13,16 +13,13 @@ export const setUsers = data => {
   };
 };
 
-export const setLog = (username, password) => {
+export const setLogin = data => {
   return {
     type: LOGIN,
     payload: axios({
       method: "post",
       url: `http://localhost:5000/api/v1/login`,
-      data: {
-        username: username,
-        password: password
-      }
+      data: data
     })
   };
 };

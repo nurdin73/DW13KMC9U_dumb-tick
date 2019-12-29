@@ -18,10 +18,39 @@ exports.index = (req, res) => {
           },
           {
             startTime: {
-              [Op.like]: `%${req.query.start_time}%`
+              [Op.substring]: req.query.start_time
             }
           }
         ]
+      },
+      include: [
+        {
+          model: categories,
+          as: "category"
+        },
+        {
+          model: users,
+          as: "user"
+        }
+      ]
+    })
+    .then(data => {
+      if (data.length > 0) {
+        res.status(200).json(Events(data));
+      } else {
+        res.status(200).json({
+          success: false,
+          message: "event not founds"
+        });
+      }
+    });
+};
+
+exports.startDate = (req, res) => {
+  events
+    .findAll({
+      where: {
+        startTime: req.query.start_time
       },
       include: [
         {
@@ -44,6 +73,7 @@ exports.index = (req, res) => {
       }
     });
 };
+
 exports.all = (req, res) => {
   events
     .findAll({

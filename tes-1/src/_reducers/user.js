@@ -1,12 +1,12 @@
 import { REGISTER, LOGIN } from "../config/constants";
 const initialState = {
-  register: [],
+  signUp: [],
   login: [],
   isLoading: false,
   error: false
 };
 
-export const register = (state = initialState, action) => {
+export const signUp = (state = initialState, action) => {
   switch (action.type) {
     case `${REGISTER}_PENDING`:
       return {
@@ -16,7 +16,7 @@ export const register = (state = initialState, action) => {
     case `${REGISTER}_FULFILLED`:
       return {
         ...state,
-        register: action.payload.data,
+        signUp: action.payload.data,
         isLoading: false
       };
     case `${REGISTER}_REJECTED`:
