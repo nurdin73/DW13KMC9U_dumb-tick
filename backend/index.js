@@ -22,6 +22,7 @@ app.group("/api/v1", router => {
 
   // API PROFILE
   router.get("/profile/:id", usersControllers.profile);
+  router.get("/user", authenticated, usersControllers.user);
   router.patch("/profile/:id", authenticated, usersControllers.update);
   router.get(
     "/user/:user_id/favorites",

@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import HeaderApp from "../components/Header";
 import { connect } from "react-redux";
 import { getCategory } from "../_actions/category";
 import { withRouter } from "react-router-dom";
@@ -26,7 +25,6 @@ class App extends Component {
     const { category } = this.props.category;
     return (
       <div>
-        <HeaderApp />
         <Container style={{ marginTop: "50px" }}>
           <Grid container spacing={5}>
             {category.map((item, i) => {

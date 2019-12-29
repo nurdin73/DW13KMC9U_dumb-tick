@@ -146,6 +146,30 @@ exports.profile = (req, res) => {
       }
     });
 };
+exports.user = (req, res) => {
+  users
+    .findOne({
+      where: {
+        id: req.user_id
+      }
+    })
+    .then(data => {
+      if (data === null) {
+        res.status(200).json({
+          message: "user not found"
+        });
+      } else {
+        res.status(200).json({
+          id: data.id,
+          name: data.name,
+          initial: data.name[0],
+          phone: data.phone,
+          email: data.email,
+          image: data.image
+        });
+      }
+    });
+};
 
 exports.update = (req, res) => {
   users

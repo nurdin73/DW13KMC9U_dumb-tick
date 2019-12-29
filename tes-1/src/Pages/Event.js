@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import Header from "../components/Header";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import { getEvent } from "../_actions/event";
@@ -26,7 +25,6 @@ class App extends Component {
     console.log(this.props.event, "ini event");
     return (
       <div>
-        <Header />
         <Container style={{ marginTop: "50px" }}>
           <Card>
             <CardMedia

@@ -4,7 +4,7 @@ import { categories } from "../_reducers/categories";
 import { events } from "../_reducers/events";
 import { category } from "../_reducers/category";
 import { event } from "../_reducers/event";
-import { signUp, login } from "../_reducers/user";
+import { signUp, login, profile } from "../_reducers/user";
 
 import { promise, logger } from "./middleware";
 
@@ -14,7 +14,8 @@ const rootReducers = combineReducers({
   category,
   event,
   signUp,
-  login
+  login,
+  profile
 });
 const store = createStore(rootReducers, applyMiddleware(promise, logger));
 

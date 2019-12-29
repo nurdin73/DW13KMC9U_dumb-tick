@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import Header from "../../components/Header";
 import {
   Container,
   FormControl,
@@ -20,6 +19,7 @@ import { connect } from "react-redux";
 
 import { getCategories } from "../../_actions/categories";
 import { getEvents } from "../../_actions/events";
+import { getProfile } from "../../_actions/user";
 class Home extends Component {
   constructor(props) {
     super(props);
@@ -29,6 +29,7 @@ class Home extends Component {
   componentDidMount() {
     this.props.getCategories();
     this.props.getEvents();
+    this.props.getProfile();
   }
 
   render() {
@@ -37,7 +38,6 @@ class Home extends Component {
     const { login } = this.props.login;
     return (
       <div>
-        <Header />
         <Container style={{ marginTop: "50px" }}>
           <div
             style={{
@@ -194,6 +194,9 @@ const mapDispatchToProps = dispatch => {
     },
     getEvents: () => {
       dispatch(getEvents());
+    },
+    getProfile: () => {
+      dispatch(getProfile());
     }
   };
 };

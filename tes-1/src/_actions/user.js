@@ -1,4 +1,4 @@
-import { REGISTER, LOGIN } from "../config/constants";
+import { REGISTER, LOGIN, PROFILE } from "../config/constants";
 import axios from "axios";
 
 export const setUsers = data => {
@@ -20,6 +20,20 @@ export const setLogin = data => {
       method: "post",
       url: `http://localhost:5000/api/v1/login`,
       data: data
+    })
+  };
+};
+
+export const getProfile = () => {
+  const token = localStorage.getItem("token");
+  return {
+    type: PROFILE,
+    payload: axios({
+      method: "get",
+      url: `http://localhost:5000/api/v1/user`,
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
     })
   };
 };

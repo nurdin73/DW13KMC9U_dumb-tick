@@ -1,5 +1,6 @@
-import { REGISTER, LOGIN } from "../config/constants";
+import { REGISTER, LOGIN, PROFILE } from "../config/constants";
 const initialState = {
+  profile: [],
   signUp: [],
   login: [],
   isLoading: false,
@@ -44,6 +45,30 @@ export const login = (state = initialState, action) => {
         isLoading: false
       };
     case `${LOGIN}_REJECTED`:
+      return {
+        ...state,
+        error: true,
+        isLoading: false
+      };
+    default:
+      return state;
+  }
+};
+
+export const profile = (state = initialState, action) => {
+  switch (action.type) {
+    case `${PROFILE}_PENDING`:
+      return {
+        ...state,
+        isLoading: true
+      };
+    case `${PROFILE}_FULFILLED`:
+      return {
+        ...state,
+        profile: action.payload.data,
+        isLoading: false
+      };
+    case `${PROFILE}_REJECTED`:
       return {
         ...state,
         error: true,
