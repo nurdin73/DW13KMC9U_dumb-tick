@@ -39,7 +39,7 @@ exports.category = (req, res) => {
           message: "category not found"
         });
       } else {
-        if (data.event === null) {
+        if (data.length === null) {
           res.status(200).json({
             message: "no event in this category"
           });

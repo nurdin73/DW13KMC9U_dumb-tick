@@ -119,7 +119,8 @@ exports.detail = (req, res) => {
     .then(data => {
       if (data === null) {
         res.status(200).json({
-          message: "event not found"
+          message: "event not found",
+          success: false
         });
       } else {
         res.status(200).json({
