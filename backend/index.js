@@ -24,11 +24,7 @@ app.group("/api/v1", router => {
   router.get("/profile/:id", usersControllers.profile);
   router.get("/user", authenticated, usersControllers.user);
   router.patch("/profile/:id", authenticated, usersControllers.update);
-  router.get(
-    "/user/:user_id/favorites",
-    authenticated,
-    favoritesControllers.favorites
-  );
+  router.get("/user/favorites", authenticated, favoritesControllers.favorites);
 
   // API CATEGORIES
 

@@ -5,7 +5,8 @@ import Event from "./Pages/Event";
 import Header from "./components/Header";
 import HeaderLogin from "./components/HeaderLogin";
 import React, { Component } from "react";
-
+import Profile from "./Pages/Profile";
+import MyTicket from "./Pages/my-ticket";
 export default class App extends Component {
   render() {
     if (localStorage.getItem("token") != null) {
@@ -14,8 +15,11 @@ export default class App extends Component {
           <div>
             <HeaderLogin />
             <Switch>
-              <Route path="/events?title=">
-                <h1>asdasdasd</h1>
+              <Route path="/my-ticket">
+                <MyTicket />
+              </Route>
+              <Route path="/profile">
+                <Profile />
               </Route>
               <Route path="/event/:id">
                 <Event />

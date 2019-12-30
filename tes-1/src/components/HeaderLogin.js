@@ -51,6 +51,13 @@ function ButtonAppBar(props) {
                 Dumb-Tick
               </Link>
             </Typography>
+            <Typography
+              variant="subtitle1"
+              component="p"
+              style={{ fontWeight: "bold" }}
+            >
+              {profile.name}
+            </Typography>
             <TemporaryDrawer
               avatar={profile.initial}
               email={profile.email}

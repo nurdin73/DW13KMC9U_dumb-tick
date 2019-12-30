@@ -9,7 +9,7 @@ exports.favorites = (req, res) => {
   favorites
     .findAll({
       where: {
-        user_id: req.params.user_id
+        user_id: req.user_id
       },
       include: [
         {

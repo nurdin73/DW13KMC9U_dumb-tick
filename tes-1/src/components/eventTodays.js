@@ -5,8 +5,7 @@ import {
   Grid,
   Card,
   CardMedia,
-  CardContent,
-  Button
+  CardContent
 } from "@material-ui/core";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
@@ -34,10 +33,18 @@ class eventTodays extends Component {
             >
               Today
             </Typography>
-            <div style={{ textAlign: "center", backgroundColor:"#d50000", borderRadius: "6px", padding: "10px", margin: "20px 0" }}>
+            <div
+              style={{
+                textAlign: "center",
+                backgroundColor: "#d50000",
+                borderRadius: "6px",
+                padding: "10px",
+                margin: "20px 0"
+              }}
+            >
               <Typography
                 variant="h5"
-                style={{ fontWeight: "bold", color:"#fff" }}
+                style={{ fontWeight: "bold", color: "#fff" }}
               >
                 {events.message}
               </Typography>
@@ -62,18 +69,19 @@ class eventTodays extends Component {
                 <Grid item md={4} key={i} xs={6}>
                   <Card>
                     <div style={{ position: "relative" }}>
-                      <Button
-                        variant="contained"
-                        color="inherit"
-                        size="small"
+                      <div
                         style={{
                           position: "absolute",
                           top: "10px",
-                          right: "10px"
+                          right: "10px",
+                          padding: "5px",
+                          backgroundColor: "#fff",
+                          color: "#000",
+                          fontWeight: 500
                         }}
                       >
                         {event.price}
-                      </Button>
+                      </div>
                       <CardMedia
                         component="img"
                         alt={event.title}
