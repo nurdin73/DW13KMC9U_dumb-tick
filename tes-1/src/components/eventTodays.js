@@ -109,8 +109,11 @@ class eventTodays extends Component {
                             color="inherit"
                             variant="h5"
                             component="h2"
+                            style={{ color: "#000", fontWeight: "bold" }}
                           >
-                            {event.title}
+                            {event.title.length > 20
+                              ? event.title.substr(0, 10) + "..."
+                              : event.title}
                           </Typography>
                         </Link>
                         <ButtonFav event_id={event.id} />
@@ -120,7 +123,9 @@ class eventTodays extends Component {
                         color="textSecondary"
                         component="p"
                       >
-                        {event.description.slice(0, 200) + "..."}
+                        {event.description.length > 200
+                          ? event.description.substr(0, 200) + "..."
+                          : event.description}
                       </Typography>
                     </CardContent>
                   </Card>

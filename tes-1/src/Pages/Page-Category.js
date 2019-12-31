@@ -103,8 +103,11 @@ class App extends Component {
                               color="inherit"
                               variant="h5"
                               component="h2"
+                              style={{ color: "#000", fontWeight: "bold" }}
                             >
-                              {item.title}
+                              {item.title.length > 200
+                                ? item.title.substr(0, 200) + "..."
+                                : item.title}
                             </Typography>
                           </Link>
                           <ButtonFav event_id={item.id} />
@@ -115,7 +118,9 @@ class App extends Component {
                           color="textSecondary"
                           component="p"
                         >
-                          {item.description.slice(0, 200) + "..."}
+                          {item.description.length > 200
+                            ? item.description.substr(0, 200) + "..."
+                            : item.description}
                         </Typography>
                       </CardContent>
                     </Card>

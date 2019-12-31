@@ -55,7 +55,6 @@ class ButtonFav extends Component {
       const found = this.state.fav.find(fav => {
         return fav.event_id === this.props.event_id;
       });
-      console.log(found);
       if (found) {
         return (
           <IconButton

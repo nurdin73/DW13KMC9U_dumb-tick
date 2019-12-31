@@ -8,11 +8,13 @@ import {
 } from "@material-ui/core";
 import { Link } from "react-router-dom";
 import { getFavorites } from "../_actions/favorites";
+import { getProfile } from "../_actions/user";
 import { connect } from "react-redux";
 
 class Favorites extends Component {
   componentDidMount() {
     this.props.getFavorites();
+    this.props.getProfile();
   }
   render() {
     const { favorites } = this.props.favorites;
@@ -34,6 +36,14 @@ class Favorites extends Component {
     }
     return (
       <div>
+        <Typography
+          variant="h4"
+          component="p"
+          color="secondary"
+          style={{ marginTop: "30px", fontWeight: "bold" }}
+        >
+          Favorites
+        </Typography>
         <Grid container spacing={4} style={{ marginTop: "10px" }}>
           {favorites.map((favorite, i) => {
             return (
@@ -102,6 +112,9 @@ const mapDispatchToProps = (dispatch, ownProps) => {
   return {
     getFavorites: () => {
       dispatch(getFavorites());
+    },
+    getProfile: () => {
+      dispatch(getProfile());
     }
   };
 };

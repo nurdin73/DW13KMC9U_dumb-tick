@@ -7,11 +7,10 @@ import {
   Grid,
   Card,
   CardMedia,
-  CardContent,
-  IconButton
+  CardContent
 } from "@material-ui/core";
-import { Favorite } from "@material-ui/icons";
 import { Link } from "react-router-dom";
+import ButtonFav from "../components/buttonFavorite";
 class eventsOnGoing extends Component {
   constructor(props) {
     super(props);
@@ -21,33 +20,6 @@ class eventsOnGoing extends Component {
   componentDidMount() {
     this.props.getEventOngoing();
   }
-
-  handleFavorite = id => event => {
-    event.preventDefault();
-    this.setState({
-      favorite: [
-        {
-          id: id,
-          color: "error",
-          favorite: true
-        }
-      ]
-    });
-    alert(id, "favorit");
-  };
-  handleCancelFavorite = id => event => {
-    event.preventDefault();
-    this.setState({
-      favorite: [
-        {
-          id: id,
-          color: "",
-          favorite: false
-        }
-      ]
-    });
-    alert(id, "non favorit");
-  };
 
   render() {
     // console.log(this.props.onGoing);
@@ -138,23 +110,23 @@ class eventsOnGoing extends Component {
                               color="inherit"
                               variant="h5"
                               component="h2"
+                              style={{ color: "#000", fontWeight: "bold" }}
                             >
-                              {event.title}
+                              {event.title.length > 20
+                                ? event.title.substr(0, 10) + "..."
+                                : event.title}
                             </Typography>
                           </Link>
-                          <IconButton
-                            onClick={this.handleFavorite(event.id)}
-                            onDoubleClick={this.handleCancelFavorite(event.id)}
-                          >
-                            <Favorite />
-                          </IconButton>
+                          <ButtonFav event_id={event.id} />
                         </div>
                         <Typography
                           variant="body2"
                           color="textSecondary"
                           component="p"
                         >
-                          {event.description.slice(0, 200) + "..."}
+                          {event.description.length > 200
+                            ? event.description.substr(0, 200) + "..."
+                            : event.description}
                         </Typography>
                       </CardContent>
                     </Card>

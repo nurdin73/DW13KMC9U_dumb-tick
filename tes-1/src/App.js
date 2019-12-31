@@ -7,6 +7,7 @@ import HeaderLogin from "./components/HeaderLogin";
 import React, { Component } from "react";
 import Profile from "./Pages/Profile";
 import MyTicket from "./Pages/my-ticket";
+import EditProfile from "./Pages/editProfile";
 export default class App extends Component {
   render() {
     if (localStorage.getItem("token") != null) {
@@ -15,6 +16,9 @@ export default class App extends Component {
           <div>
             <HeaderLogin />
             <Switch>
+              <Route path="/edit-profile">
+                <EditProfile />
+              </Route>
               <Route path="/my-ticket">
                 <MyTicket />
               </Route>

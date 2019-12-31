@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { getProfile } from "../_actions/user";
-import { Container, Typography, Avatar } from "@material-ui/core";
+import { Container, Typography, Avatar, Grid, Button } from "@material-ui/core";
 import { Link } from "react-router-dom";
 import Favorites from "../components/favorite";
 
@@ -18,77 +18,64 @@ class Profile extends Component {
 
     return (
       <div>
-        <Container style={{ marginTop: "50px" }}>
-          <Typography
-            variant="h4"
-            component="p"
-            color="secondary"
-            style={{ fontWeight: "bold" }}
-          >
-            Profile
-          </Typography>
-          <div
+        <Container maxWidth="md" style={{ marginTop: "50px" }}>
+          <Grid
+            container
             style={{
               display: "flex",
               justifyContent: "space-between",
               alignItems: "center"
             }}
           >
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "space-between",
-                width: "700px"
-              }}
-            >
-              <div>
-                <Typography
-                  variant="h4"
-                  component="p"
-                  style={{ fontWeight: "bold", marginBottom: "10px" }}
-                >
-                  {profile.name}
-                </Typography>
-                <Typography variant="h5" component="p">
-                  {profile.phone}
-                </Typography>
-                <Typography variant="h5" component="p">
-                  {profile.email}
-                </Typography>
-              </div>
-              <Link
-                to="/edit-profile"
+            <Grid item xs={6}>
+              <Typography
+                variant="h3"
+                component="p"
+                style={{ fontWeight: "bold", color: "rgb(97, 97, 97)" }}
+              >
+                {profile.name}
+              </Typography>
+              <Typography
+                variant="h5"
+                component="p"
+                style={{ fontWeight: 300, color: "rgb(97, 97, 97)" }}
+              >
+                {profile.phone}
+              </Typography>
+              <Typography
+                variant="h5"
+                component="p"
                 style={{
-                  textDecoration: "none",
-                  color: "#fff",
-                  backgroundColor: "#f50057",
-                  padding: "5px",
-                  borderRadius: "5px",
-                  height: "20px"
+                  fontWeight: 100,
+                  color: "rgb(97, 97, 97)",
+                  marginBottom: "10px"
                 }}
               >
-                <Typography>Edit Profile</Typography>
+                {profile.email}
+              </Typography>
+              <Link to="/edit-profile" style={{ textDecoration: "none" }}>
+                <Button color="secondary" variant="contained" size="medium">
+                  Edit PRofile
+                </Button>
               </Link>
+            </Grid>
+            <Grid
+              item
+              xs={6}
+              style={{ display: "flex", justifyContent: "flex-end" }}
+            >
               <Avatar
                 style={{
-                  width: "100px",
-                  height: "100px",
-                  fontSize: "60px",
+                  fontSize: "100px",
+                  width: "150px",
+                  height: "150px",
                   textTransform: "uppercase"
                 }}
               >
                 {profile.initial}
               </Avatar>
-            </div>
-          </div>
-          <Typography
-            variant="h4"
-            component="p"
-            color="secondary"
-            style={{ marginTop: "40px", fontWeight: "bold" }}
-          >
-            Favorites
-          </Typography>
+            </Grid>
+          </Grid>
           <Favorites />
         </Container>
       </div>

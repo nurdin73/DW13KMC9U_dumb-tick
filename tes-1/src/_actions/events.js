@@ -17,7 +17,7 @@ if (hari < 10) {
 }
 let tgl = date.getFullYear() + "-" + bln + "-" + hari;
 const dateEnd = new Date();
-dateEnd.setDate(dateEnd.getDate() + 10);
+dateEnd.setDate(dateEnd.getDate() + 1);
 dateEnd.setMonth(dateEnd.getMonth());
 let endBln = dateEnd.getMonth() + 1;
 if (endBln < 10) {
