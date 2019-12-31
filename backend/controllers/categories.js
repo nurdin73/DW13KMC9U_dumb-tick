@@ -15,7 +15,6 @@ exports.index = (req, res) => {
     }
   });
 };
-
 exports.category = (req, res) => {
   events
     .findAll({

@@ -6,6 +6,26 @@ const users = models.users;
 const Sequelize = require("sequelize");
 const Op = Sequelize.Op;
 const { Events, formatDate, formatRupiah } = require("../helpers/functions");
+
+const date = new Date();
+date.setDate(date.getDate() + 15);
+date.setMonth(date.getMonth());
+let bln = date.getMonth() + 1;
+if (bln < 10) {
+  bln = "0" + bln;
+} else {
+  bln = bln;
+}
+let hari = date.getDate();
+if (hari < 10) {
+  hari = "0" + hari;
+} else {
+  hari = hari;
+}
+
+let tgl = date.getFullYear() + "-" + bln + "-" + hari;
+let ongoing = date.getFullYear() + "-" + bln + "-" + hari;
+
 exports.index = (req, res) => {
   events
     .findAll({
@@ -18,7 +38,12 @@ exports.index = (req, res) => {
           },
           {
             startTime: {
-              [Op.substring]: req.query.start_time
+              [Op.between]: [req.query.start_time, req.query.end_time]
+            }
+          },
+          {
+            endTime: {
+              [Op.between]: [req.query.start_time, req.query.end_time]
             }
           }
         ]
@@ -35,6 +60,45 @@ exports.index = (req, res) => {
       ]
     })
     .then(data => {
+      if (data.length > 0) {
+        res.status(200).json(Events(data));
+      } else {
+        res.status(200).json({
+          success: false,
+          message: "event not founds"
+        });
+      }
+    });
+};
+
+// local = local.replace("/", "-");
+
+exports.onGoing = (req, res) => {
+  events
+    .findAll({
+      where: {
+        [Op.or]: [
+          {
+            startTime: {
+              [Op.between]: [req.query.startTime, tgl]
+            }
+          }
+        ]
+      },
+      include: [
+        {
+          model: categories,
+          as: "category"
+        },
+        {
+          model: users,
+          as: "user"
+        }
+      ]
+    })
+    .then(data => {
+      console.log(req.query.startTime);
+      console.log(tgl);
       if (data.length > 0) {
         res.status(200).json(Events(data));
       } else {

@@ -13,6 +13,7 @@ import {
   Button,
   Divider
 } from "@material-ui/core";
+import Footer from "../components/footer";
 class App extends Component {
   constructor(props) {
     super(props);
@@ -86,6 +87,7 @@ class App extends Component {
               </CardContent>
             </Card>
           </Container>
+          <Footer />
         </div>
       );
     }

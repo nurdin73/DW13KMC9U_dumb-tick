@@ -16,6 +16,9 @@ import { connect } from "react-redux";
 import { getCategories } from "../../_actions/categories";
 import { getProfile } from "../../_actions/user";
 import Event from "../../components/eventTodays";
+import Ongoing from "../../components/eventsOnGoing";
+
+import Footer from "../../components/footer";
 class Home extends Component {
   constructor(props) {
     super(props);
@@ -107,6 +110,8 @@ class Home extends Component {
           </Grid>
         </Container>
         <Event />
+        <Ongoing />
+        <Footer />
       </div>
     );
   }

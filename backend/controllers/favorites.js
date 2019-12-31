@@ -36,3 +36,15 @@ exports.favorites = (req, res) => {
       res.status(200).json(newFavorites(result));
     });
 };
+
+exports.favorite = (req, res) => {
+  favorites
+    .findAll({
+      where: {
+        user_id: req.user_id
+      }
+    })
+    .then(data => {
+      res.status(200).json(data);
+    });
+};

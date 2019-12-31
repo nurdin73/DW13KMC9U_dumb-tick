@@ -13,7 +13,6 @@ import {
   Drawer
 } from "@material-ui/core";
 import { connect } from "react-redux";
-import { getProfile } from "../_actions/user";
 import { Link } from "react-router-dom";
 const useStyles = makeStyles(theme => ({
   root: {
@@ -174,12 +173,12 @@ const mapStateToProps = (state, ownProps) => {
   };
 };
 
-const mapDispatchToProps = (dispatch, ownProps) => {
-  return {
-    getProfile: () => {
-      dispatch(getProfile());
-    }
-  };
-};
+// const mapDispatchToProps = (dispatch, ownProps) => {
+//   return {
+//     getProfile: () => {
+//       dispatch(getProfile());
+//     }
+//   };
+// };
 
-export default connect(mapStateToProps, mapDispatchToProps)(ButtonAppBar);
+export default connect(mapStateToProps)(ButtonAppBar);

@@ -1,7 +1,7 @@
 import { createStore, combineReducers, applyMiddleware } from "redux";
 
 import { categories } from "../_reducers/categories";
-import { events } from "../_reducers/events";
+import { events, ongoing } from "../_reducers/events";
 import { category } from "../_reducers/category";
 import { event } from "../_reducers/event";
 import { signUp, login, profile } from "../_reducers/user";
@@ -16,7 +16,8 @@ const rootReducers = combineReducers({
   signUp,
   login,
   profile,
-  favorites
+  favorites,
+  ongoing
 });
 const store = createStore(rootReducers, applyMiddleware(promise, logger));
 

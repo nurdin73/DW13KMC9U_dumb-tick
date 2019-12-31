@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { getCategory } from "../_actions/category";
 import { withRouter } from "react-router-dom";
 import { getProfile } from "../_actions/user";
+import { getFavorites } from "../_actions/favorites";
 
 import {
   Typography,
@@ -14,16 +15,28 @@ import {
   Container
 } from "@material-ui/core";
 import { Link } from "react-router-dom";
-
+import ButtonFav from "../components/buttonFavorite";
+import Footer from "../components/footer";
 class App extends Component {
   constructor(props) {
     super(props);
-    this.state = { variable: 0 };
+    this.state = {
+      favorite: []
+    };
   }
   componentDidMount() {
     this.props.getCategory(this.props.category_id);
     this.props.getProfile();
+    this.props.getFavorites();
   }
+  handleFavorite = id => event => {
+    event.preventDefault();
+    alert(id);
+  };
+  handleCancelFavorite = id => event => {
+    event.preventDefault();
+    alert(id);
+  };
   render() {
     const { category } = this.props.category;
     if (category.length === 0) {
@@ -74,19 +87,29 @@ class App extends Component {
                         />
                       </div>
                       <CardContent>
-                        <Link
-                          to={"/event/" + item.id}
-                          style={{ textDecoration: "none" }}
+                        <div
+                          style={{
+                            display: "flex",
+                            justifyContent: "space-between",
+                            alignItems: "center"
+                          }}
                         >
-                          <Typography
-                            gutterBottom
-                            color="inherit"
-                            variant="h5"
-                            component="h2"
+                          <Link
+                            to={"/event/" + item.id}
+                            style={{ textDecoration: "none" }}
                           >
-                            {item.title}
-                          </Typography>
-                        </Link>
+                            <Typography
+                              gutterBottom
+                              color="inherit"
+                              variant="h5"
+                              component="h2"
+                            >
+                              {item.title}
+                            </Typography>
+                          </Link>
+                          <ButtonFav event_id={item.id} />
+                        </div>
+
                         <Typography
                           variant="body2"
                           color="textSecondary"
@@ -101,6 +124,7 @@ class App extends Component {
               })}
             </Grid>
           </Container>
+          <Footer />
         </div>
       );
     }
@@ -110,7 +134,8 @@ class App extends Component {
 const mapStateToProps = (state, ownProps) => {
   return {
     category_id: ownProps.match.params.id,
-    category: state.category
+    category: state.category,
+    favorites: state.favorites
   };
 };
 const mapDispatchToProps = dispatch => {
@@ -120,6 +145,9 @@ const mapDispatchToProps = dispatch => {
     },
     getProfile: () => {
       dispatch(getProfile());
+    },
+    getFavorites: () => {
+      dispatch(getFavorites());
     }
   };
 };

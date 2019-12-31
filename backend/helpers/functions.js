@@ -2,7 +2,7 @@ exports.formatDate = date => {
   let hours = date.getHours();
   let minutes = date.getMinutes();
   let seconds = date.getSeconds();
-  let month = date.getMonth() + 1
+  let month = date.getMonth() + 1;
   minutes = minutes < 10 ? "0" + minutes : minutes;
   seconds = seconds < 10 ? "0" + seconds : seconds;
   hours = hours < 10 ? "0" + hours : hours;
@@ -58,7 +58,7 @@ const formatDate = date => {
   let hours = date.getHours();
   let minutes = date.getMinutes();
   let seconds = date.getSeconds();
-  let month = date.getMonth() + 1
+  let month = date.getMonth() + 1;
 
   minutes = minutes < 10 ? "0" + minutes : minutes;
   seconds = seconds < 10 ? "0" + seconds : seconds;

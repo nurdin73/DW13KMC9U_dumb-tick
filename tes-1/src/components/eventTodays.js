@@ -10,16 +10,18 @@ import {
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { getEvents } from "../_actions/events";
-
+import ButtonFav from "./buttonFavorite";
 class eventTodays extends Component {
   constructor(props) {
     super(props);
-    this.state = { variable: 0 };
+    this.state = {
+      color: "",
+      favorite: false
+    };
   }
   componentDidMount() {
     this.props.getEvents();
   }
-
   render() {
     const { events } = this.props.events;
     if (events.success === false) {
@@ -91,19 +93,28 @@ class eventTodays extends Component {
                       />
                     </div>
                     <CardContent>
-                      <Link
-                        to={"/event/" + event.id}
-                        style={{ textDecoration: "none" }}
+                      <div
+                        style={{
+                          display: "flex",
+                          justifyContent: "space-between",
+                          alignItems: "center"
+                        }}
                       >
-                        <Typography
-                          gutterBottom
-                          color="inherit"
-                          variant="h5"
-                          component="h2"
+                        <Link
+                          to={"/event/" + event.id}
+                          style={{ textDecoration: "none" }}
                         >
-                          {event.title}
-                        </Typography>
-                      </Link>
+                          <Typography
+                            gutterBottom
+                            color="inherit"
+                            variant="h5"
+                            component="h2"
+                          >
+                            {event.title}
+                          </Typography>
+                        </Link>
+                        <ButtonFav event_id={event.id} />
+                      </div>
                       <Typography
                         variant="body2"
                         color="textSecondary"
