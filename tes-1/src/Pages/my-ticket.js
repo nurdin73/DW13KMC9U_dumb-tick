@@ -3,6 +3,8 @@ import { Typography, Container, Grid } from "@material-ui/core";
 import "@material-ui/icons";
 import { getTicket } from "../_actions/payments";
 import { getProfile } from "../_actions/user";
+import Footer from "../components/footer";
+
 import { connect } from "react-redux";
 class MyTicket extends Component {
   componentDidMount() {
@@ -178,6 +180,7 @@ class MyTicket extends Component {
             </Container>
           </div>
         </Container>
+        <Footer />
       </div>
     );
   }

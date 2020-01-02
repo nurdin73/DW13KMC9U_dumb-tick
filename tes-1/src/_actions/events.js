@@ -36,7 +36,7 @@ if (hari1 < 10) {
 let endTgl = dateEnd.getFullYear() + "-" + endBln + "-" + hari1;
 
 let dateOngoing = new Date();
-dateOngoing.setDate(dateOngoing.getDate() + 5);
+dateOngoing.setDate(dateOngoing.getDate() + 1);
 dateOngoing.setMonth(dateOngoing.getMonth());
 let blnOngoing = dateOngoing.getMonth() + 1;
 if (blnOngoing < 10) {

@@ -8,6 +8,7 @@ import React, { Component } from "react";
 import Profile from "./Pages/Profile";
 import MyTicket from "./Pages/my-ticket";
 import Payment from "./Pages/payment";
+import AddEvent from "./Pages/add-event";
 import EditProfile from "./Pages/editProfile";
 export default class App extends Component {
   render() {
@@ -27,6 +28,9 @@ export default class App extends Component {
               </Route>
               <Route path="/payment">
                 <Payment />
+              </Route>
+              <Route path="/add-event">
+                <AddEvent />
               </Route>
               <Route path="/my-ticket">
                 <MyTicket />

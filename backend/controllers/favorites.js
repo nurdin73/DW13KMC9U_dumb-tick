@@ -48,3 +48,40 @@ exports.favorite = (req, res) => {
       res.status(200).json(data);
     });
 };
+
+exports.addFavorite = (req, res) => {
+  favorites
+    .findAll({
+      where: {
+        user_id: req.user_id,
+        event_id: req.body.event_id
+      }
+    })
+    .then(favorite => {
+      if (favorite != null) {
+        res.status(200).json({
+          status: false,
+          message: `Favorite already exists`
+        });
+      } else {
+        favorites
+          .create({
+            user_id: req.user_id,
+            event_id: req.body.event_id
+          })
+          .then(result => {
+            if (result != null) {
+              res.status(200).json({
+                status: true,
+                message: `Event was favorite's`
+              });
+            } else {
+              res.status(200).json({
+                status: false,
+                message: `Failed To favorite this event`
+              });
+            }
+          });
+      }
+    });
+};

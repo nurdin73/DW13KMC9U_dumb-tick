@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { getProfile } from "../_actions/user";
+import Footer from "../components/footer";
 import { Container, Typography, Avatar, Grid, Button } from "@material-ui/core";
 import { Link } from "react-router-dom";
 import Favorites from "../components/favorite";
@@ -78,6 +79,7 @@ class Profile extends Component {
           </Grid>
           <Favorites />
         </Container>
+        <Footer />
       </div>
     );
   }

@@ -4,6 +4,7 @@ import { getPayment } from "../_actions/payments";
 import { getProfile } from "../_actions/user";
 import AlertConfirm from "../components/alert";
 import { connect } from "react-redux";
+import Footer from "../components/footer";
 
 class Payment extends Component {
   constructor(props) {
@@ -296,6 +297,7 @@ class Payment extends Component {
             </div>
           </div>
         </Container>
+        <Footer />
       </div>
     );
   }

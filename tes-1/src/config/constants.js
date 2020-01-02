@@ -3,6 +3,7 @@ export const GET_CATEGORY = "GET_CATEGORY";
 export const GET_EVENTS = "GET_EVENTS";
 export const GET_EVENTS_ON_GOING = "GET_EVENTS_ON_GOING";
 export const GET_EVENT = "GET_EVENT";
+export const ADD_EVENT = "ADD_EVENT";
 export const PROFILE = "PROFILE";
 export const UPDATE_PROFILE = "UPDATE_PROFILE";
 export const PAYMENTS = "PAYMENTS";
