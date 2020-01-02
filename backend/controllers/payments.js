@@ -1,4 +1,4 @@
-const models = require ('../models');
+const models = require("../models");
 const categories = models.categories;
 const events = models.events;
 const users = models.users;
@@ -6,60 +6,60 @@ const payments = models.payments;
 const {
   newPayments,
   formatDate,
-  formatRupiah,
-} = require ('../helpers/functions');
+  formatRupiah
+} = require("../helpers/functions");
 
 exports.post = (req, res) => {
   events
-    .findOne ({
+    .findOne({
       where: {
-        id: req.params.id,
+        id: req.params.id
       },
       include: [
         {
           model: categories,
-          as: 'category',
+          as: "category"
         },
         {
           model: users,
-          as: 'user',
-        },
-      ],
+          as: "user"
+        }
+      ]
     })
-    .then (event => {
+    .then(event => {
       if (event === null) {
-        res.status (200).json ({
-          message: 'event not found',
+        res.status(200).json({
+          message: "event not found"
         });
       } else {
-        const {quantity, status, attachment} = req.body;
+        const { quantity, status, attachment } = req.body;
         payments
-          .create ({
+          .create({
             quantity: quantity,
             totalPrice: quantity * event.price,
             status: status,
             attachment: attachment,
             event_id: req.params.id,
-            buyer_id: req.user_id,
+            buyer_id: req.user_id
           })
-          .then (data => {
+          .then(data => {
             if (data === 0) {
-              res.status (500).json ({
-                message: 'add payment failed',
+              res.status(500).json({
+                message: "add payment failed"
               });
             } else {
-              res.status (200).json ({
+              res.status(200).json({
                 id: data.id,
                 event: {
                   id: event.id,
                   title: event.title,
                   category: {
                     id: event.category.id,
-                    name: event.category.name,
+                    name: event.category.name
                   },
-                  startTime: formatDate (event.startTime),
-                  endTime: formatDate (event.endTime),
-                  price: formatRupiah (event.price),
+                  startTime: formatDate(event.startTime),
+                  endTime: formatDate(event.endTime),
+                  price: formatRupiah(event.price),
                   description: event.description,
                   address: event.address,
                   urlMaps: event.urlMap,
@@ -69,13 +69,13 @@ exports.post = (req, res) => {
                     name: event.user.name,
                     phoneNumber: event.user.phone,
                     email: event.user.email,
-                    img: event.user.image,
-                  },
+                    img: event.user.image
+                  }
                 },
                 quantity: data.quantity,
                 totalPrice: data.totalPrice,
                 attachment: data.attachment,
-                status: data.status,
+                status: data.status
               });
             }
           });
@@ -85,68 +85,68 @@ exports.post = (req, res) => {
 
 exports.confirm = (req, res) => {
   payments
-    .findOne ({
+    .findOne({
       where: {
-        id: req.params.id,
-      },
+        id: req.params.id
+      }
     })
-    .then (payment => {
+    .then(payment => {
       if (payment === null) {
-        res.status (200).json ({
-          message: 'payment not found',
+        res.status(200).json({
+          message: "payment not found"
         });
       } else {
         if (payment.buyer_id != req.user_id) {
-          res.status (403).json ({
-            message: 'you not autorized in this order',
+          res.status(403).json({
+            message: "you not autorized in this order"
           });
         } else {
           payments
-            .update (
+            .update(
               {
-                status: req.body.status,
+                status: req.body.status
               },
               {
                 where: {
-                  id: req.params.id,
-                },
+                  id: req.params.id
+                }
               }
             )
-            .then (data => {
+            .then(data => {
               if (data === 0) {
-                res.status (500).json ({
-                  message: 'update error',
+                res.status(500).json({
+                  message: "update error"
                 });
               } else {
                 events
-                  .findOne ({
+                  .findOne({
                     where: {
-                      id: payment.event_id,
+                      id: payment.event_id
                     },
                     include: [
                       {
                         model: users,
-                        as: 'user',
+                        as: "user"
                       },
                       {
                         model: categories,
-                        as: 'category',
-                      },
-                    ],
+                        as: "category"
+                      }
+                    ]
                   })
-                  .then (event => {
-                    res.status (200).json ({
+                  .then(event => {
+                    res.status(200).json({
                       id: payment.id,
                       event: {
                         id: event.id,
                         title: event.title,
                         category: {
                           id: event.category.id,
-                          name: event.category.name,
+                          name: event.category.name
                         },
-                        startTime: formatDate (event.startTime),
-                        endTime: formatDate (event.endTime),
-                        price: formatRupiah (event.price),
+                        startTime: formatDate(event.startTime),
+                        endTime: formatDate(event.endTime),
+                        price: formatRupiah(event.price),
                         description: event.description,
                         address: event.address,
                         urlMaps: event.urlMap,
@@ -156,13 +156,13 @@ exports.confirm = (req, res) => {
                           name: event.user.name,
                           phoneNumber: event.user.phone,
                           email: event.user.email,
-                          img: event.user.image,
-                        },
+                          img: event.user.image
+                        }
                       },
                       quantity: payment.quantity,
-                      totalPrice: formatRupiah (payment.totalPrice),
+                      totalPrice: formatRupiah(payment.totalPrice),
                       attachment: payment.attachment,
-                      status: req.body.status,
+                      status: req.body.status
                     });
                   });
               }
@@ -174,76 +174,77 @@ exports.confirm = (req, res) => {
 
 exports.approved = (req, res) => {
   payments
-    .findAll ({
+    .findAll({
       where: {
         status: req.query.status,
-        buyer_id: req.user_id,
+        buyer_id: req.user_id
       },
       include: [
         {
           model: events,
-          as: 'event',
+          as: "event",
           include: [
             {
               model: categories,
-              as: 'category',
+              as: "category"
             },
             {
               model: users,
-              as: 'user',
-            },
-          ],
+              as: "user"
+            }
+          ]
         },
         {
           model: users,
-          as: 'buyer',
-        },
-      ],
+          as: "buyer"
+        }
+      ]
     })
-    .then (data => {
+    .then(data => {
       if (data.length > 0) {
-        res.status (200).json (newPayments (data));
+        res.status(200).json(newPayments(data));
       } else {
-        res.status (200).json ({
-          message: 'data payment is not found',
+        res.status(200).json({
+          message: "data payment is not found"
         });
       }
     });
 };
 
-exports.ticket = (req, res) => {
+exports.pending = (req, res) => {
   payments
-    .findAll ({
+    .findAll({
       where: {
         buyer_id: req.user_id,
+        status: "pending"
       },
       include: [
         {
           model: events,
-          as: 'event',
+          as: "event",
           include: [
             {
               model: categories,
-              as: 'category',
+              as: "category"
             },
             {
               model: users,
-              as: 'user',
-            },
-          ],
+              as: "user"
+            }
+          ]
         },
         {
           model: users,
-          as: 'buyer',
-        },
-      ],
+          as: "buyer"
+        }
+      ]
     })
-    .then (data => {
+    .then(data => {
       if (data.length > 0) {
-        res.status (200).json (newPayments (data));
+        res.status(200).json(newPayments(data));
       } else {
-        res.status (200).json ({
-          message: 'data payment is not found',
+        res.status(200).json({
+          message: "data payment is not found"
         });
       }
     });

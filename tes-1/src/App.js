@@ -1,25 +1,32 @@
-import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
-import Home from './Pages/Home/home';
-import Category from './Pages/Page-Category';
-import Event from './Pages/Event';
-import Header from './components/Header';
-import HeaderLogin from './components/HeaderLogin';
-import React, {Component} from 'react';
-import Profile from './Pages/Profile';
-import MyTicket from './Pages/my-ticket';
-import EditProfile from './Pages/editProfile';
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import Home from "./Pages/Home/home";
+import Category from "./Pages/Page-Category";
+import Event from "./Pages/Event";
+import Header from "./components/Header";
+import HeaderLogin from "./components/HeaderLogin";
+import React, { Component } from "react";
+import Profile from "./Pages/Profile";
+import MyTicket from "./Pages/my-ticket";
+import Payment from "./Pages/payment";
+import EditProfile from "./Pages/editProfile";
 export default class App extends Component {
-  render () {
-    if (localStorage.getItem ('token') != null) {
+  render() {
+    if (localStorage.getItem("token") != null) {
       return (
         <Router>
           <div
-            style={{backgroundColor: 'rgb(239, 198, 198)', minHeight: '100vh'}}
+            style={{
+              backgroundColor: "rgb(239, 198, 198)",
+              minHeight: "100vh"
+            }}
           >
             <HeaderLogin />
             <Switch>
               <Route path="/edit-profile">
                 <EditProfile />
+              </Route>
+              <Route path="/payment">
+                <Payment />
               </Route>
               <Route path="/my-ticket">
                 <MyTicket />
@@ -43,15 +50,18 @@ export default class App extends Component {
           </div>
         </Router>
       );
-      function Logout () {
-        localStorage.clear ('token');
-        window.location.href = 'http://localhost:3000';
+      function Logout() {
+        localStorage.clear("token");
+        window.location.href = "http://localhost:3000";
       }
     } else {
       return (
         <Router>
           <div
-            style={{backgroundColor: 'rgb(239, 198, 198)', minHeight: '100vh'}}
+            style={{
+              backgroundColor: "rgb(239, 198, 198)",
+              minHeight: "100vh"
+            }}
           >
             <Header />
             <Switch>

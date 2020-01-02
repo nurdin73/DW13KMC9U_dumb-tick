@@ -209,7 +209,7 @@ exports.newPayments = data => {
         name: item.buyer.name
       },
       quantity: item.quantity,
-      totalPrice: item.totalPrice,
+      totalPrice: formatRupiah(item.totalPrice),
       status: item.status,
       attachment: item.attachment
     };
