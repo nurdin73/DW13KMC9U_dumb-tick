@@ -19,7 +19,10 @@ class Profile extends Component {
 
     return (
       <div>
-        <Container maxWidth="md" style={{ marginTop: "50px" }}>
+        <Container
+          maxWidth="md"
+          style={{ marginTop: "50px", minHeight: "100vh" }}
+        >
           <Grid
             container
             style={{

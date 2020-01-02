@@ -6,7 +6,7 @@ import { category } from "../_reducers/category";
 import { event, addEvent } from "../_reducers/event";
 import { signUp, login, profile, update } from "../_reducers/user";
 import { favorites } from "../_reducers/favorites";
-import { payments, paymentPending } from "../_reducers/payments";
+import { payments, paymentPending, addPayment } from "../_reducers/payments";
 import { promise, logger } from "./middleware";
 
 const rootReducers = combineReducers({
@@ -22,7 +22,8 @@ const rootReducers = combineReducers({
   favorites,
   ongoing,
   payments,
-  paymentPending
+  paymentPending,
+  addPayment
 });
 const store = createStore(rootReducers, applyMiddleware(promise, logger));
 

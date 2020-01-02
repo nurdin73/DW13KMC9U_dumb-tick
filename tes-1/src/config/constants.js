@@ -7,6 +7,7 @@ export const ADD_EVENT = "ADD_EVENT";
 export const PROFILE = "PROFILE";
 export const UPDATE_PROFILE = "UPDATE_PROFILE";
 export const PAYMENTS = "PAYMENTS";
+export const ADD_PAYMENT = "ADD_PAYMENT";
 export const GET_PAYMENT = "GET_PAYMENT";
 export const FAVORITES = "FAVORITES";
 export const REGISTER = "REGISTER";

@@ -10,10 +10,11 @@ const {
 } = require("../helpers/functions");
 
 exports.post = (req, res) => {
+  console.log(req.body.event_id);
   events
     .findOne({
       where: {
-        id: req.params.id
+        id: req.body.event_id
       },
       include: [
         {
@@ -29,26 +30,31 @@ exports.post = (req, res) => {
     .then(event => {
       if (event === null) {
         res.status(200).json({
+          success: false,
           message: "event not found"
         });
       } else {
-        const { quantity, status, attachment } = req.body;
+        const { quantity, event_id } = req.body;
+        console.log(event_id);
         payments
           .create({
             quantity: quantity,
             totalPrice: quantity * event.price,
-            status: status,
-            attachment: attachment,
-            event_id: req.params.id,
+            status: "pending",
+            attachment:
+              "http://khanfarkhan.com/wp-content/uploads/2018/03/terbaru13-Contoh-Bentuk-Kwitansi-Pembayaran-2.png",
+            event_id: event_id,
             buyer_id: req.user_id
           })
           .then(data => {
             if (data === 0) {
               res.status(500).json({
-                message: "add payment failed"
+                message: "add payment failed",
+                success: false
               });
             } else {
               res.status(200).json({
+                success: true,
                 id: data.id,
                 event: {
                   id: event.id,
@@ -207,7 +213,8 @@ exports.approved = (req, res) => {
         res.status(200).json(newPayments(data));
       } else {
         res.status(200).json({
-          message: "data payment is not found"
+          message: "Your ticket is not found",
+          result: false
         });
       }
     });
@@ -246,7 +253,8 @@ exports.pending = (req, res) => {
         res.status(200).json(newPayments(data));
       } else {
         res.status(200).json({
-          message: "data payment is not found"
+          message: "data payment is not found",
+          result: false
         });
       }
     });

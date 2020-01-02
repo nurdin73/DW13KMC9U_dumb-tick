@@ -206,6 +206,7 @@ exports.detail = (req, res) => {
           timeEnd: formatTime(data.endTime),
           endTime: formatDateEvent(data.endTime),
           price: formatRupiah(data.price),
+          priceNumber: data.price,
           description: data.description,
           address: data.address,
           urlMaps: data.urlMap,

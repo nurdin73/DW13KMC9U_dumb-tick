@@ -1,75 +1,100 @@
-import React, {Component} from 'react';
-import {Favorite} from '@material-ui/icons';
-import {IconButton} from '@material-ui/core';
-import Axios from 'axios';
+import React, { Component } from "react";
+import { Favorite } from "@material-ui/icons";
+import { IconButton } from "@material-ui/core";
+import Axios from "axios";
 
 class ButtonFav extends Component {
-  constructor (props) {
-    super (props);
+  constructor(props) {
+    super(props);
     this.state = {
       fav: [],
-      success: false,
+      success: false
     };
   }
 
   handleFavorite = id => event => {
-    event.preventDefault ();
-    Axios ({
-      method: 'post',
-      url: '',
+    const token = localStorage.getItem("token");
+    event.preventDefault();
+    Axios({
+      method: "post",
+      url: "http://localhost:5000/api/v1/favorite",
+      data: {
+        event_id: id
+      },
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    }).then(res => {
+      if (res.data.status === false) {
+        alert(res.data.message);
+      } else {
+        window.location.href = "http://localhost:3000/";
+      }
     });
-    alert (id, 'favorite');
   };
   handleCancelFavorite = id => event => {
-    event.preventDefault ();
-    alert (id, 'upFavorite');
-  };
-  componentDidMount () {
-    const token = localStorage.getItem ('token');
-
-    Axios ({
-      method: 'get',
-      url: 'http://localhost:5000/api/v1/user/favorite',
-      headers: {
-        Authorization: `Bearer ${token}`,
+    const token = localStorage.getItem("token");
+    event.preventDefault();
+    Axios({
+      method: "delete",
+      url: "http://localhost:5000/api/v1/favorite",
+      data: {
+        event_id: id
       },
-    }).then (res => {
-      if (res.data.length === 0) {
-        this.setState ({success: false});
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    }).then(res => {
+      if (res.data.status === false) {
+        alert(res.data.message);
       } else {
-        this.setState ({fav: res.data, success: true});
+        alert(res.data.message);
+        window.location.href = "http://localhost:3000/";
+      }
+    });
+  };
+  componentDidMount() {
+    const token = localStorage.getItem("token");
+
+    Axios({
+      method: "get",
+      url: "http://localhost:5000/api/v1/user/favorite",
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    }).then(res => {
+      if (res.data.length === 0) {
+        this.setState({ success: false });
+      } else {
+        this.setState({ fav: res.data, success: true });
       }
     });
   }
-  render () {
+  render() {
     if (this.state.success === false) {
       return (
         <IconButton
-          onClick={this.handleFavorite (this.props.event_id)}
-          onDoubleClick={this.handleCancelFavorite (this.props.event_id)}
+          onClick={this.handleFavorite(this.props.event_id)}
+          onDoubleClick={this.handleCancelFavorite(this.props.event_id)}
         >
           <Favorite />
         </IconButton>
       );
     } else {
-      const found = this.state.fav.find (fav => {
+      const found = this.state.fav.find(fav => {
         return fav.event_id === this.props.event_id;
       });
       if (found) {
         return (
           <IconButton
-            onClick={this.handleFavorite (this.props.event_id)}
-            onDoubleClick={this.handleCancelFavorite (this.props.event_id)}
+            onDoubleClick={this.handleCancelFavorite(this.props.event_id)}
           >
             <Favorite color="error" />
           </IconButton>
         );
       } else {
         return (
-          <IconButton
-            onClick={this.handleFavorite (this.props.event_id)}
-            onDoubleClick={this.handleCancelFavorite (this.props.event_id)}
-          >
+          <IconButton onClick={this.handleFavorite(this.props.event_id)}>
             <Favorite />
           </IconButton>
         );

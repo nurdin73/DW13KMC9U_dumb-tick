@@ -1,4 +1,4 @@
-import { PAYMENTS, GET_PAYMENT } from "../config/constants";
+import { PAYMENTS, GET_PAYMENT, ADD_PAYMENT } from "../config/constants";
 import axios from "axios";
 
 export const getTicket = () => {
@@ -25,6 +25,21 @@ export const getPayment = () => {
       headers: {
         Authorization: `Bearer ${token}`
       }
+    })
+  };
+};
+
+export const setOrder = data => {
+  const token = localStorage.getItem("token");
+  return {
+    type: ADD_PAYMENT,
+    payload: axios({
+      method: "post",
+      url: `http://localhost:5000/api/v1/event/order`,
+      headers: {
+        Authorization: `Bearer ${token}`
+      },
+      data: data
     })
   };
 };

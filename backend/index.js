@@ -27,6 +27,11 @@ app.group("/api/v1", router => {
   router.get("/user/favorites", authenticated, favoritesControllers.favorites);
   router.get("/user/favorite", authenticated, favoritesControllers.favorite);
   router.post("/favorite", authenticated, favoritesControllers.addFavorite);
+  router.delete(
+    "/favorite",
+    authenticated,
+    favoritesControllers.deleteFavorite
+  );
 
   // API CATEGORIES
 
@@ -48,7 +53,7 @@ app.group("/api/v1", router => {
   router.patch("/event/:id", authenticated, eventsControllers.patch); // update event
   router.delete("/event/:id", authenticated, eventsControllers.delete); // delete event
 
-  router.post("/event/:id/order", authenticated, paymentsControllers.post); // add payment
+  router.post("/event/order", authenticated, paymentsControllers.post); // add payment
   router.patch("/order/:id", authenticated, paymentsControllers.confirm); // conrifm
   router.get("/payment", authenticated, paymentsControllers.pending);
   router.get("/order", authenticated, paymentsControllers.approved);

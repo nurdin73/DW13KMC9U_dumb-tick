@@ -1,7 +1,8 @@
-import { PAYMENTS, GET_PAYMENT } from "../config/constants";
+import { PAYMENTS, GET_PAYMENT, ADD_PAYMENT } from "../config/constants";
 const initialState = {
   payments: [],
   paymentPending: [],
+  addPayment: [],
   isLoading: false,
   error: false
 };
@@ -43,6 +44,29 @@ export const paymentPending = (state = initialState, action) => {
         isLoading: false
       };
     case `${GET_PAYMENT}_REJECTED`:
+      return {
+        ...state,
+        error: true,
+        isLoading: false
+      };
+    default:
+      return state;
+  }
+};
+export const addPayment = (state = initialState, action) => {
+  switch (action.type) {
+    case `${ADD_PAYMENT}_PENDING`:
+      return {
+        ...state,
+        isLoading: true
+      };
+    case `${ADD_PAYMENT}_FULFILLED`:
+      return {
+        ...state,
+        addPayment: action.payload.data,
+        isLoading: false
+      };
+    case `${ADD_PAYMENT}_REJECTED`:
       return {
         ...state,
         error: true,

@@ -24,7 +24,8 @@ exports.authenticated = (req, res, next) => {
     }
   } catch (error) {
     res.send({
-      message: "token is not defined"
+      message: "token is not defined",
+      success: false
     });
   }
 };

@@ -12,11 +12,13 @@ module.exports = (sequelize, DataTypes) => {
     // associations can be defined here
     favorites.belongsTo(models.users, {
       foreignKey: "user_id",
-      sourceKey: "id"
+      sourceKey: "id",
+      as: "user"
     });
     favorites.belongsTo(models.events, {
       foreignKey: "event_id",
-      sourceKey: "id"
+      sourceKey: "id",
+      as: "event"
     });
   };
   return favorites;

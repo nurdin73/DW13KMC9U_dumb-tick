@@ -58,7 +58,7 @@ exports.addFavorite = (req, res) => {
       }
     })
     .then(favorite => {
-      if (favorite != null) {
+      if (favorite.length > 0) {
         res.status(200).json({
           status: false,
           message: `Favorite already exists`
@@ -82,6 +82,29 @@ exports.addFavorite = (req, res) => {
               });
             }
           });
+      }
+    });
+};
+
+exports.deleteFavorite = (req, res) => {
+  favorites
+    .destroy({
+      where: {
+        user_id: req.user_id,
+        event_id: req.body.event_id
+      }
+    })
+    .then(result => {
+      if (result === 0) {
+        res.status(500).json({
+          status: false,
+          message: "unFavorite has been failed"
+        });
+      } else {
+        res.status(200).json({
+          status: true,
+          message: "unFavorite has been success"
+        });
       }
     });
 };

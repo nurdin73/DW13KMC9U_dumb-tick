@@ -2,6 +2,7 @@ import { GET_EVENTS, GET_EVENTS_ON_GOING } from "../config/constants";
 const initialState = {
   events: [],
   onGoing: [],
+  addPayment: [],
   isLoading: false,
   error: false
 };
