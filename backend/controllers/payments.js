@@ -115,7 +115,8 @@ exports.confirm = (req, res) => {
             .then(data => {
               if (data === 0) {
                 res.status(500).json({
-                  message: "update error"
+                  message: "update error",
+                  status: "failed"
                 });
               } else {
                 events
@@ -136,6 +137,7 @@ exports.confirm = (req, res) => {
                   })
                   .then(event => {
                     res.status(200).json({
+                      status: "success",
                       id: payment.id,
                       event: {
                         id: event.id,

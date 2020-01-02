@@ -1,7 +1,8 @@
 import React, { Component } from "react";
-import { Container, Typography, Grid, Button } from "@material-ui/core";
+import { Container, Typography, Grid } from "@material-ui/core";
 import { getPayment } from "../_actions/payments";
 import { getProfile } from "../_actions/user";
+import AlertConfirm from "../components/alert";
 import { connect } from "react-redux";
 
 class Payment extends Component {
@@ -72,7 +73,8 @@ class Payment extends Component {
                       <div
                         style={{
                           padding: "20px",
-                          backgroundColor: "rgb(236, 103, 103)"
+                          backgroundColor: "rgb(236, 103, 103)",
+                          marginTop: "30px"
                         }}
                       >
                         <div
@@ -276,19 +278,15 @@ class Payment extends Component {
                             alignItems: "center"
                           }}
                         >
-                          <Button
-                            onClick={this.handleConfirm(payment.id)}
-                            variant="contained"
-                            size="large"
-                            color="secondary"
-                            style={{
-                              boxShadow: "none",
-                              textTransform: "capitalize",
-                              fontWeight: "bold"
-                            }}
-                          >
-                            Confirm
-                          </Button>
+                          <AlertConfirm
+                            payment_id={payment.id}
+                            payment_event={
+                              payment.buyer ? payment.event.title : ""
+                            }
+                            payment_event_address={
+                              payment.event ? payment.event.address : ""
+                            }
+                          />
                         </Grid>
                       </Grid>
                     </div>
