@@ -1,14 +1,15 @@
-import { createStore, combineReducers, applyMiddleware } from "redux";
+import {createStore, combineReducers, applyMiddleware} from 'redux';
 
-import { categories } from "../_reducers/categories";
-import { events, ongoing } from "../_reducers/events";
-import { category } from "../_reducers/category";
-import { event } from "../_reducers/event";
-import { signUp, login, profile } from "../_reducers/user";
-import { favorites } from "../_reducers/favorites";
-import { promise, logger } from "./middleware";
+import {categories} from '../_reducers/categories';
+import {events, ongoing} from '../_reducers/events';
+import {category} from '../_reducers/category';
+import {event} from '../_reducers/event';
+import {signUp, login, profile, update} from '../_reducers/user';
+import {favorites} from '../_reducers/favorites';
+import {payments} from '../_reducers/payments';
+import {promise, logger} from './middleware';
 
-const rootReducers = combineReducers({
+const rootReducers = combineReducers ({
   categories,
   events,
   category,
@@ -16,9 +17,11 @@ const rootReducers = combineReducers({
   signUp,
   login,
   profile,
+  update,
   favorites,
-  ongoing
+  ongoing,
+  payments,
 });
-const store = createStore(rootReducers, applyMiddleware(promise, logger));
+const store = createStore (rootReducers, applyMiddleware (promise, logger));
 
 export default store;

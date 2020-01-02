@@ -1,135 +1,135 @@
-import React from "react";
-import { withStyles } from "@material-ui/core/styles";
-import { makeStyles } from "@material-ui/core/styles";
-import AppBar from "@material-ui/core/AppBar";
-import Toolbar from "@material-ui/core/Toolbar";
-import Typography from "@material-ui/core/Typography";
-import Button from "@material-ui/core/Button";
-import IconButton from "@material-ui/core/IconButton";
+import React from 'react';
+import {withStyles} from '@material-ui/core/styles';
+import {makeStyles} from '@material-ui/core/styles';
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import Typography from '@material-ui/core/Typography';
+import Button from '@material-ui/core/Button';
+import IconButton from '@material-ui/core/IconButton';
 import {
   Container,
   FormControl,
   InputLabel,
   Input,
-  FormHelperText
-} from "@material-ui/core";
-import Dialog from "@material-ui/core/Dialog";
-import MuiDialogTitle from "@material-ui/core/DialogTitle";
-import MuiDialogContent from "@material-ui/core/DialogContent";
-import CloseIcon from "@material-ui/icons/Close";
-import Visibility from "@material-ui/icons/Visibility";
-import VisibilityOff from "@material-ui/icons/VisibilityOff";
-import InputAdornment from "@material-ui/core/InputAdornment";
-import { Link } from "react-router-dom";
-import { connect } from "react-redux";
-import { useForm } from "react-hook-form";
-import { setUsers, setLogin } from "../_actions/user";
+  FormHelperText,
+} from '@material-ui/core';
+import Dialog from '@material-ui/core/Dialog';
+import MuiDialogTitle from '@material-ui/core/DialogTitle';
+import MuiDialogContent from '@material-ui/core/DialogContent';
+import CloseIcon from '@material-ui/icons/Close';
+import Visibility from '@material-ui/icons/Visibility';
+import VisibilityOff from '@material-ui/icons/VisibilityOff';
+import InputAdornment from '@material-ui/core/InputAdornment';
+import {Link} from 'react-router-dom';
+import {connect} from 'react-redux';
+import {useForm} from 'react-hook-form';
+import {setUsers, setLogin} from '../_actions/user';
 const styles = theme => ({
   root: {
     margin: 0,
-    padding: theme.spacing(2)
+    padding: theme.spacing (2),
   },
   closeButton: {
-    position: "absolute",
-    right: theme.spacing(1),
-    top: theme.spacing(1),
-    color: theme.palette.grey[500]
-  }
+    position: 'absolute',
+    right: theme.spacing (1),
+    top: theme.spacing (1),
+    color: theme.palette.grey[500],
+  },
 });
 
-const DialogTitle = withStyles(styles)(props => {
-  const { children, classes, onClose, ...other } = props;
+const DialogTitle = withStyles (styles) (props => {
+  const {children, classes, onClose, ...other} = props;
   return (
     <MuiDialogTitle disableTypography className={classes.root} {...other}>
       <Typography variant="h6">{children}</Typography>
-      {onClose ? (
-        <IconButton
-          aria-label="close"
-          className={classes.closeButton}
-          onClick={onClose}
-        >
-          <CloseIcon />
-        </IconButton>
-      ) : null}
+      {onClose
+        ? <IconButton
+            aria-label="close"
+            className={classes.closeButton}
+            onClick={onClose}
+          >
+            <CloseIcon />
+          </IconButton>
+        : null}
     </MuiDialogTitle>
   );
 });
 
-const DialogContent = withStyles(theme => ({
+const DialogContent = withStyles (theme => ({
   root: {
-    padding: theme.spacing(2)
-  }
-}))(MuiDialogContent);
+    padding: theme.spacing (2),
+  },
+})) (MuiDialogContent);
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles (theme => ({
   root: {
-    flexGrow: 1
+    flexGrow: 1,
   },
   menuButton: {
-    marginRight: theme.spacing(2)
+    marginRight: theme.spacing (2),
   },
   title: {
-    flexGrow: 1
-  }
+    flexGrow: 1,
+  },
 }));
 
-function ButtonAppBar(props) {
-  const classes = useStyles();
-  const [openLogin, setOpenLogin] = React.useState(false);
-  const [openRegister, setOpenRegister] = React.useState(false);
+function ButtonAppBar (props) {
+  const classes = useStyles ();
+  const [openLogin, setOpenLogin] = React.useState (false);
+  const [openRegister, setOpenRegister] = React.useState (false);
 
-  const { register, handleSubmit, errors } = useForm();
+  const {register, handleSubmit, errors} = useForm ();
 
-  const [values, setValues] = React.useState({
-    password: "",
-    showPassword: false
+  const [values, setValues] = React.useState ({
+    password: '',
+    showPassword: false,
   });
 
   const handleChange = prop => event => {
-    setValues({ ...values, [prop]: event.target.value });
+    setValues ({...values, [prop]: event.target.value});
   };
 
   const handleClickShowPassword = () => {
-    setValues({ ...values, showPassword: !values.showPassword });
+    setValues ({...values, showPassword: !values.showPassword});
   };
 
   const handleMouseDownPassword = event => {
-    event.preventDefault();
+    event.preventDefault ();
   };
 
   const handleClickOpen = () => {
-    setOpenLogin(true);
+    setOpenLogin (true);
   };
   const handleClose = () => {
-    setOpenLogin(false);
+    setOpenLogin (false);
   };
   const handleClickOpen1 = () => {
-    setOpenRegister(true);
+    setOpenRegister (true);
   };
   const handleClose1 = () => {
-    setOpenRegister(false);
+    setOpenRegister (false);
   };
 
   // integrate global state
   const onSubmit = (data, e) => {
-    e.target.reset();
-    props.setUsers(data);
+    e.target.reset ();
+    props.setUsers (data);
   };
   const onSubmitLogin = (data, e) => {
-    e.target.reset();
-    props.setLogin(data);
+    e.target.reset ();
+    props.setLogin (data);
   };
-  const { signUp } = props.signUp;
-  if (signUp.message === "success") {
-    localStorage.setItem("token", signUp.token);
-    window.location.href = "http://localhost:3000";
+  const {signUp} = props.signUp;
+  if (signUp.message === 'success') {
+    localStorage.setItem ('token', signUp.token);
+    window.location.href = 'http://localhost:3000';
   }
 
   // login
-  const { login } = props.login;
-  if (login.message === "success") {
-    localStorage.setItem("token", login.token);
-    window.location.href = "http://localhost:3000";
+  const {login} = props.login;
+  if (login.message === 'success') {
+    localStorage.setItem ('token', login.token);
+    window.location.href = 'http://localhost:3000';
   }
   return (
     <div className={classes.root}>
@@ -140,10 +140,10 @@ function ButtonAppBar(props) {
               <Link
                 to="/"
                 style={{
-                  textDecoration: "none",
-                  color: "#fff",
-                  textTransform: "uppercase",
-                  fontWeight: "bold"
+                  textDecoration: 'none',
+                  color: '#fff',
+                  textTransform: 'uppercase',
+                  fontWeight: 'bold',
                 }}
               >
                 Dumb-Tick
@@ -153,7 +153,7 @@ function ButtonAppBar(props) {
               color="inherit"
               variant="outlined"
               onClick={handleClickOpen1}
-              style={{ marginRight: "10px" }}
+              style={{marginRight: '10px'}}
             >
               Register
             </Button>
@@ -175,20 +175,20 @@ function ButtonAppBar(props) {
         <DialogTitle id="customized-dialog-title" onClose={handleClose}>
           Login
         </DialogTitle>
-        <DialogContent dividers style={{ width: "500px" }}>
-          <form autoComplete="off" onSubmit={handleSubmit(onSubmitLogin)}>
-            <FormControl fullWidth style={{ marginBottom: "15px" }}>
+        <DialogContent dividers style={{width: '500px'}}>
+          <form autoComplete="off" onSubmit={handleSubmit (onSubmitLogin)}>
+            <FormControl fullWidth style={{marginBottom: '15px'}}>
               <InputLabel htmlFor="username">Username</InputLabel>
               <Input
                 id="username"
                 name="username"
                 aria-describedby="my-helper-username"
-                inputRef={register({
-                  required: "Required",
+                inputRef={register ({
+                  required: 'Required',
                   minLength: {
                     value: 5,
-                    message: "Your username too short"
-                  }
+                    message: 'Your username too short',
+                  },
                 })}
               />
               <FormHelperText id="my-helper-username">
@@ -196,22 +196,22 @@ function ButtonAppBar(props) {
               </FormHelperText>
             </FormControl>
 
-            <FormControl fullWidth style={{ marginBottom: "15px" }}>
+            <FormControl fullWidth style={{marginBottom: '15px'}}>
               <InputLabel htmlFor="standard-adornment-password">
                 Password
               </InputLabel>
               <Input
                 id="standard-adornment-password"
-                type={values.showPassword ? "text" : "password"}
+                type={values.showPassword ? 'text' : 'password'}
                 name="password"
                 // value={values.password}
-                onChange={handleChange("password")}
-                inputRef={register({
-                  required: "Required",
+                onChange={handleChange ('password')}
+                inputRef={register ({
+                  required: 'Required',
                   minLength: {
                     value: 8,
-                    message: "Your password too short"
-                  }
+                    message: 'Your password too short',
+                  },
                 })}
                 endAdornment={
                   <InputAdornment position="end">
@@ -250,16 +250,20 @@ function ButtonAppBar(props) {
         <DialogTitle id="customized-dialog-title" onClose={handleClose1}>
           Register
         </DialogTitle>
-        <DialogContent dividers style={{ width: "500px" }}>
-          <form autoComplete="off" onSubmit={handleSubmit(onSubmit)}>
-            <FormControl fullWidth style={{ marginBottom: "15px" }}>
+        <DialogContent dividers style={{width: '500px'}}>
+          <form autoComplete="off" onSubmit={handleSubmit (onSubmit)}>
+            <FormControl fullWidth style={{marginBottom: '15px'}}>
               <InputLabel htmlFor="name">Name</InputLabel>
               <Input
                 id="name"
                 name="name"
                 aria-describedby="my-helper-name"
-                inputRef={register({
-                  required: "required"
+                inputRef={register ({
+                  required: 'required',
+                  pattern: {
+                    value: /\w/,
+                    message: 'Value Name Not number',
+                  },
                 })}
               />
               <FormHelperText id="my-helper-username">
@@ -267,18 +271,18 @@ function ButtonAppBar(props) {
               </FormHelperText>
             </FormControl>
 
-            <FormControl fullWidth style={{ marginBottom: "15px" }}>
+            <FormControl fullWidth style={{marginBottom: '15px'}}>
               <InputLabel htmlFor="email">Email</InputLabel>
               <Input
                 id="email"
                 name="email"
                 aria-describedby="my-helper-email"
-                inputRef={register({
-                  required: "Required",
+                inputRef={register ({
+                  required: 'Required',
                   pattern: {
                     value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
-                    message: "invalid email address"
-                  }
+                    message: 'invalid email address',
+                  },
                 })}
               />
               <FormHelperText id="my-helper-email">
@@ -286,22 +290,22 @@ function ButtonAppBar(props) {
               </FormHelperText>
             </FormControl>
 
-            <FormControl fullWidth style={{ marginBottom: "15px" }}>
+            <FormControl fullWidth style={{marginBottom: '15px'}}>
               <InputLabel htmlFor="phone">Phone Number</InputLabel>
               <Input
                 id="phone"
                 name="phone"
                 aria-describedby="my-helper-phone"
-                inputRef={register({
-                  required: "Required",
+                inputRef={register ({
+                  required: 'Required',
                   minLength: {
                     value: 11,
-                    message: "phone number too short (11 key)"
+                    message: 'phone number too short (11 key)',
                   },
                   pattern: {
-                    value: /\d+/,
-                    message: "Invalid phone number"
-                  }
+                    value: /^[0-9]*$/,
+                    message: 'Invalid phone number',
+                  },
                 })}
               />
               <FormHelperText id="my-helper-email" color="secondary">
@@ -309,18 +313,18 @@ function ButtonAppBar(props) {
               </FormHelperText>
             </FormControl>
 
-            <FormControl fullWidth style={{ marginBottom: "15px" }}>
+            <FormControl fullWidth style={{marginBottom: '15px'}}>
               <InputLabel htmlFor="username">Username</InputLabel>
               <Input
                 id="username"
                 name="username"
                 aria-describedby="my-helper-username"
-                inputRef={register({
-                  required: "Required",
+                inputRef={register ({
+                  required: 'Required',
                   minLength: {
                     value: 5,
-                    message: "Your username too short"
-                  }
+                    message: 'Your username too short',
+                  },
                 })}
               />
               <FormHelperText id="my-helper-username">
@@ -328,22 +332,22 @@ function ButtonAppBar(props) {
               </FormHelperText>
             </FormControl>
 
-            <FormControl fullWidth style={{ marginBottom: "15px" }}>
+            <FormControl fullWidth style={{marginBottom: '15px'}}>
               <InputLabel htmlFor="standard-adornment-password">
                 Password
               </InputLabel>
               <Input
                 id="standard-adornment-password"
-                type={values.showPassword ? "text" : "password"}
+                type={values.showPassword ? 'text' : 'password'}
                 name="password"
                 // value={values.password}
-                onChange={handleChange("password")}
-                inputRef={register({
-                  required: "Required",
+                onChange={handleChange ('password')}
+                inputRef={register ({
+                  required: 'Required',
                   minLength: {
                     value: 8,
-                    message: "Your password too short"
-                  }
+                    message: 'Your password too short',
+                  },
                 })}
                 endAdornment={
                   <InputAdornment position="end">
@@ -381,19 +385,19 @@ function ButtonAppBar(props) {
 const mapStateToProps = (state, ownProps) => {
   return {
     signUp: state.signUp,
-    login: state.login
+    login: state.login,
   };
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
     setUsers: data => {
-      dispatch(setUsers(data));
+      dispatch (setUsers (data));
     },
     setLogin: data => {
-      dispatch(setLogin(data));
-    }
+      dispatch (setLogin (data));
+    },
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(ButtonAppBar);
+export default connect (mapStateToProps, mapDispatchToProps) (ButtonAppBar);

@@ -3,15 +3,18 @@ exports.formatDate = date => {
   let minutes = date.getMinutes();
   let seconds = date.getSeconds();
   let month = date.getMonth() + 1;
+  let hari = date.getDate();
   minutes = minutes < 10 ? "0" + minutes : minutes;
   seconds = seconds < 10 ? "0" + seconds : seconds;
   hours = hours < 10 ? "0" + hours : hours;
+  month = month < 10 ? "0" + month : month;
+  hari = hari < 10 ? "0" + hari : hari;
   return (
     date.getFullYear() +
     "-" +
     month +
     "-" +
-    date.getDate() +
+    hari +
     " " +
     hours +
     ":" +
@@ -20,8 +23,71 @@ exports.formatDate = date => {
     seconds
   );
 };
+exports.formatDateEvent = date => {
+  var months = [
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec"
+  ];
+  let hours = date.getHours();
+  let minutes = date.getMinutes();
+  let seconds = date.getSeconds();
+  let month = months[date.getMonth()];
+  let hari = date.getDate();
+  minutes = minutes < 10 ? "0" + minutes : minutes;
+  seconds = seconds < 10 ? "0" + seconds : seconds;
+  hours = hours < 10 ? "0" + hours : hours;
+  month = month < 10 ? "0" + month : month;
+  hari = hari < 10 ? "0" + hari : hari;
+  return hari + " " + month + " " + date.getFullYear();
+};
+
+const formatDatePayment = date => {
+  var months = [
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec"
+  ];
+  const day = ["Sun", "Mon", "Tue", "Wen", "Thu", "Fri", "Sat"];
+  let month = months[date.getMonth()];
+  let Day = day[date.getDay()];
+  let hari = date.getDate();
+  month = month < 10 ? "0" + month : month;
+  hari = hari < 10 ? "0" + hari : hari;
+  return Day + ". " + hari + " " + month + " " + date.getFullYear();
+};
+
 exports.formatTime = date => {
-  return date.getFullYear() + "-" + date.getMonth() + "-" + date.getDate();
+  let hours = date.getHours();
+  let minutes = date.getMinutes();
+  minutes = minutes < 10 ? "0" + minutes : minutes;
+  hours = hours < 10 ? "0" + hours : hours;
+  return hours + ":" + minutes;
+};
+const formatTime = date => {
+  let hours = date.getHours();
+  let minutes = date.getMinutes();
+  minutes = minutes < 10 ? "0" + minutes : minutes;
+  hours = hours < 10 ? "0" + hours : hours;
+  return hours + ":" + minutes;
 };
 
 exports.formatRupiah = angka => {
@@ -117,9 +183,15 @@ exports.newPayments = data => {
           id: item.event.category.id,
           name: item.event.category.name
         },
-        startTime: item.event.startTime,
-        endTime: item.event.endTime,
-        price: item.event.price,
+        startTime: {
+          date: formatDatePayment(item.event.startTime),
+          time: formatTime(item.event.startTime)
+        },
+        endTime: {
+          date: formatDatePayment(item.event.endTime),
+          time: formatTime(item.event.endTime)
+        },
+        price: formatRupiah(item.event.price),
         description: item.event.description,
         address: item.event.address,
         urlMap: item.event.urlMap,
@@ -131,6 +203,10 @@ exports.newPayments = data => {
           email: item.event.user.email,
           image: item.event.user.image
         }
+      },
+      buyer: {
+        id: item.buyer.id,
+        name: item.buyer.name
       },
       quantity: item.quantity,
       totalPrice: item.totalPrice,

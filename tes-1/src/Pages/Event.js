@@ -1,8 +1,8 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import { withRouter } from "react-router-dom";
-import { getEvent } from "../_actions/event";
-import { getProfile } from "../_actions/user";
+import React, {Component} from 'react';
+import {connect} from 'react-redux';
+import {withRouter} from 'react-router-dom';
+import {getEvent} from '../_actions/event';
+import {getProfile} from '../_actions/user';
 
 import {
   Container,
@@ -11,32 +11,64 @@ import {
   Typography,
   CardContent,
   Button,
-  Divider
-} from "@material-ui/core";
-import Footer from "../components/footer";
+  Divider,
+  Grid,
+} from '@material-ui/core';
+import Footer from '../components/footer';
+import {
+  LocationOn,
+  Facebook,
+  Twitter,
+  Share,
+  CalendarToday,
+  QueryBuilder,
+  Assignment,
+  Phone,
+  MailOutline,
+} from '@material-ui/icons';
 class App extends Component {
-  constructor(props) {
-    super(props);
-    this.state = { variable: 0 };
+  constructor (props) {
+    super (props);
+    this.state = {variable: 0};
   }
 
-  componentDidMount() {
-    this.props.getEvent(this.props.event_id);
-    this.props.getProfile();
+  componentDidMount () {
+    this.props.getEvent (this.props.event_id);
+    this.props.getProfile ();
   }
-  render() {
-    const { event } = this.props.event;
-    console.log(event.length);
+
+  // formatDate = date => {
+  //   var months = [
+  //     'January',
+  //     'February',
+  //     'March',
+  //     'April',
+  //     'May',
+  //     'June',
+  //     'July',
+  //     'August',
+  //     'September',
+  //     'October',
+  //     'November',
+  //     'December',
+  //   ];
+  //   let month = months[date.getMonth ()];
+  //   return month;
+  // };
+
+  render () {
+    const {event} = this.props.event;
+    // console.log (this.formatDate (event.startTime));
     if (event.success === false) {
       return (
         <div>
-          <Container style={{ marginTop: "50px" }}>
+          <Container style={{marginTop: '50px'}}>
             <div
               style={{
-                backgroundColor: "#b71c1c",
-                padding: "10px",
-                color: "#fff",
-                textAlign: "center"
+                backgroundColor: '#b71c1c',
+                padding: '10px',
+                color: '#fff',
+                textAlign: 'center',
               }}
             >
               <Typography variant="h5">{event.message}</Typography>
@@ -47,7 +79,7 @@ class App extends Component {
     } else {
       return (
         <div>
-          <Container style={{ marginTop: "50px" }}>
+          <Container maxWidth="md" style={{marginTop: '50px'}}>
             <Card>
               <CardMedia
                 component="img"
@@ -59,33 +91,328 @@ class App extends Component {
               <CardContent>
                 <div
                   style={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                    alignItems: "center"
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
                   }}
                 >
-                  <Typography variant="h5" color="inherit">
+                  <Typography variant="h4" color="inherit">
                     {event.title}
                   </Typography>
-                  <Button
-                    variant="contained"
+                  <Typography
+                    variant="h4"
+                    component="p"
                     color="secondary"
-                    size="medium"
-                    style={{ fontWeight: "bold" }}
+                    style={{textTransform: 'uppercase', fontWeight: 'bold'}}
                   >
                     {event.price}
-                  </Button>
+                  </Typography>
                 </div>
-                <Typography
-                  variant="body1"
-                  color="secondary"
-                  style={{ marginTop: "30px", marginBottom: "10px" }}
+                <Grid
+                  container
+                  style={{
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                    marginBottom: '20px',
+                    marginTop: '20px',
+                  }}
                 >
-                  {event.category_name}
-                </Typography>
-                <Divider />
+                  <Grid item xs={6}>
+                    <Typography
+                      variant="h5"
+                      color="secondary"
+                      style={{fontWeight: 'bold'}}
+                    >
+                      {event.category ? event.category.name : ''}
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={1}>
+                    <div
+                      style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'flex-start',
+                      }}
+                    >
+                      <button
+                        style={{
+                          border: 'none',
+                          outline: 'none',
+                          fontSize: '40px',
+                          color: '#f50057',
+                          padding: '5px 20px',
+                          cursor: 'pointer',
+                        }}
+                      >
+                        -
+                      </button>
+                      <span
+                        style={{
+                          margin: '0 10px',
+                          fontWeight: 'bold',
+                          fontSize: '30px',
+                        }}
+                      >
+                        0
+                      </span>
+                      <button
+                        style={{
+                          border: 'none',
+                          outline: 'none',
+                          fontSize: '40px',
+                          color: '#f50057',
+                          padding: '5px 15px',
+                          cursor: 'pointer',
+                        }}
+                      >
+                        +
+                      </button>
+                    </div>
+                  </Grid>
+                  <Grid
+                    item
+                    xs={1}
+                    style={{display: 'flex', justifyContent: 'center'}}
+                  >
+                    <Button variant="contained" color="secondary" size="large">
+                      Buy
+                    </Button>
+                  </Grid>
+                </Grid>
+                <Divider style={{height: '3px', marginBottom: '20px'}} />
+
+                <Grid container spacing={5}>
+                  <Grid item sm={4}>
+                    <Typography
+                      variant="h5"
+                      component="p"
+                      style={{fontWeight: 'bold', marginBottom: '20px'}}
+                    >
+                      Hosted By
+                    </Typography>
+                    <Grid
+                      container
+                      spacing={1}
+                      style={{display: 'flex', alignItems: 'center'}}
+                    >
+                      <Grid item xs={5}>
+                        <div
+                          style={{
+                            padding: '10px',
+                            backgroundColor: '#000',
+                            color: '#fff',
+                            fontSize: '80px',
+                            textAlign: 'center',
+                            lineHeight: '100px',
+                          }}
+                        >
+                          {event.createdBy ? event.createdBy.name[0] : ''}
+                        </div>
+                      </Grid>
+                      <Grid item xs={6}>
+                        <Typography variant="h4" component="p">
+                          {event.createdBy ? event.createdBy.name : ''}
+
+                        </Typography>
+                      </Grid>
+                    </Grid>
+                  </Grid>
+                  <Grid item sm={4}>
+                    <Typography
+                      variant="h5"
+                      component="p"
+                      style={{fontWeight: 'bold', marginBottom: '20px'}}
+                    >
+                      Date & Time
+                    </Typography>
+                    <Typography
+                      variant="body2"
+                      component="p"
+                      color="textSecondary"
+                      style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        fontWeight: 'bold',
+                      }}
+                    >
+                      <CalendarToday /> {event.startTime} - {event.endTime}
+                    </Typography>
+                    <Typography
+                      variant="body2"
+                      component="p"
+                      color="textSecondary"
+                      style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        fontWeight: 'bold',
+                        marginTop: '20px',
+                      }}
+                    >
+                      <QueryBuilder /> {event.timeStart} - {event.timeEnd} WIB
+                    </Typography>
+                  </Grid>
+                  <Grid item sm={4}>
+                    <Typography
+                      variant="h5"
+                      component="p"
+                      style={{fontWeight: 'bold', marginBottom: '20px'}}
+                    >
+                      Contact Person
+                    </Typography>
+                    <Typography
+                      variant="body2"
+                      component="p"
+                      color="textSecondary"
+                      style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        fontWeight: 'bold',
+                        marginTop: '15px',
+                      }}
+                    >
+                      <Assignment />
+                      {event.createdBy ? event.createdBy.name : ''}
+                    </Typography>
+                    <Typography
+                      variant="body2"
+                      component="p"
+                      color="textSecondary"
+                      style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        fontWeight: 'bold',
+                        marginTop: '15px',
+                      }}
+                    >
+                      <Phone />
+                      {event.createdBy ? event.createdBy.phoneNumber : ''}
+                    </Typography>
+                    <Typography
+                      variant="body2"
+                      component="p"
+                      color="textSecondary"
+                      style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        fontWeight: 'bold',
+                        marginTop: '15px',
+                      }}
+                    >
+                      <MailOutline />
+                      {event.createdBy ? event.createdBy.email : ''}
+                    </Typography>
+                  </Grid>
+                </Grid>
+
               </CardContent>
             </Card>
+            <Grid container spacing={4} style={{marginTop: '50px'}}>
+              <Grid item sm={6}>
+                <div style={{textAlign: 'center', marginBottom: '20px'}}>
+                  <Typography
+                    variant="h6"
+                    component="p"
+                    color="inherit"
+                    style={{fontWeight: 'bold'}}
+                  >
+                    Event Description
+                  </Typography>
+                </div>
+                <div style={{textAlign: 'justify'}}>
+                  <Typography
+                    variant="body1"
+                    color="textSecondary"
+                    component="p"
+                    style={{fontFamily: 'Poppins'}}
+                  >
+                    {event.description}
+                  </Typography>
+                </div>
+              </Grid>
+              <Grid item sm={6}>
+                <div style={{textAlign: 'center', marginBottom: '20px'}}>
+                  <Typography
+                    variant="h6"
+                    component="p"
+                    color="inherit"
+                    style={{fontWeight: 'bold'}}
+                  >
+                    Location
+                  </Typography>
+                </div>
+                <div style={{textAlign: 'justify', marginBottom: '20px'}}>
+                  <Typography
+                    variant="body1"
+                    color="textSecondary"
+                    component="p"
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                    }}
+                  >
+                    <LocationOn fontSize="large" /> {event.address}
+                  </Typography>
+                </div>
+                <div>
+                  <iframe
+                    src={event.urlMaps}
+                    width="430"
+                    height="430"
+                    allowfullscreen=""
+                    title={event.title}
+                  />
+                </div>
+                <div
+                  style={{
+                    textAlign: 'center',
+                    marginTop: '20px',
+                    marginBottom: '30px',
+                  }}
+                >
+                  <Typography
+                    variant="h6"
+                    component="p"
+                    color="inherit"
+                    style={{fontWeight: 'bold'}}
+                  >
+                    Share Event
+                  </Typography>
+                </div>
+                <Grid container spacing={3}>
+                  <Grid item xs={4}>
+                    <Button
+                      variant="contained"
+                      size="medium"
+                      color="primary"
+                      style={{display: 'flex', alignItems: 'center'}}
+                    >
+                      <Facebook /> Facebook
+                    </Button>
+                  </Grid>
+                  <Grid item xs={4}>
+                    <Button
+                      variant="contained"
+                      size="medium"
+                      color="primary"
+                      style={{display: 'flex', alignItems: 'center'}}
+                    >
+                      <Twitter /> Twitter
+                    </Button>
+                  </Grid>
+                  <Grid item xs={4}>
+                    <Button
+                      variant="contained"
+                      size="medium"
+                      color="inherit"
+                      style={{display: 'flex', alignItems: 'center'}}
+                    >
+                      <Share /> share
+                    </Button>
+                  </Grid>
+                </Grid>
+              </Grid>
+            </Grid>
           </Container>
           <Footer />
         </div>
@@ -96,18 +423,18 @@ class App extends Component {
 const mapStateToProps = (state, ownProps) => {
   return {
     event_id: ownProps.match.params.id,
-    event: state.event
+    event: state.event,
   };
 };
 const mapDispatchToProps = dispatch => {
   return {
     getEvent: event_id => {
-      dispatch(getEvent(event_id));
+      dispatch (getEvent (event_id));
     },
     getProfile: () => {
-      dispatch(getProfile());
-    }
+      dispatch (getProfile ());
+    },
   };
 };
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App));
+export default withRouter (connect (mapStateToProps, mapDispatchToProps) (App));

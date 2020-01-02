@@ -1,7 +1,7 @@
-"use strict";
+'use strict';
 module.exports = (sequelize, DataTypes) => {
-  const events = sequelize.define(
-    "events",
+  const events = sequelize.define (
+    'events',
     {
       title: DataTypes.STRING,
       category_id: DataTypes.INTEGER,
@@ -12,23 +12,25 @@ module.exports = (sequelize, DataTypes) => {
       address: DataTypes.STRING,
       urlMap: DataTypes.TEXT,
       image: DataTypes.STRING,
-      createdBy: DataTypes.INTEGER
+      createdBy: DataTypes.INTEGER,
     },
     {}
   );
-  events.associate = function(models) {
+  events.associate = function (models) {
     // associations can be defined here
-    events.belongsTo(models.categories, {
-      foreignKey: "category_id",
-      sourceKey: "id"
+    events.belongsTo (models.categories, {
+      foreignKey: 'category_id',
+      as: 'category',
+      sourceKey: 'id',
     });
-    events.belongsTo(models.users, {
-      foreignKey: "createdBy",
-      sourceKey: "id"
+    events.belongsTo (models.users, {
+      foreignKey: 'createdBy',
+      as: 'user',
+      sourceKey: 'id',
     });
-    events.hasMany(models.payments, {
-      foreignKey: "event_id",
-      as: "event"
+    events.hasMany (models.payments, {
+      foreignKey: 'event_id',
+      as: 'event',
     });
   };
   return events;

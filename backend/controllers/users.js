@@ -1,73 +1,73 @@
-const jwt = require("jsonwebtoken");
-const bcrypt = require("bcryptjs");
-const models = require("../models");
+const jwt = require ('jsonwebtoken');
+const bcrypt = require ('bcryptjs');
+const models = require ('../models');
 const users = models.users;
 
 exports.register = (req, res) => {
   let storeName, storeEmail, storePassword, storeUsername, storePhone;
-  const { name, email, phone, username, password, role } = req.body;
+  const {name, email, phone, username, password, role} = req.body;
 
-  storeName = name.trim();
-  storePassword = password.trim();
-  storeEmail = email.trim();
-  storePhone = phone.trim();
-  storeUsername = username.trim();
+  storeName = name.trim ();
+  storePassword = password.trim ();
+  storeEmail = email.trim ();
+  storePhone = phone.trim ();
+  storeUsername = username.trim ();
 
   users
-    .findAll({
+    .findAll ({
       where: {
-        email: storeEmail
-      }
+        email: storeEmail,
+      },
     })
-    .then(email => {
+    .then (email => {
       if (email.length > 0) {
-        res.status(200).json({
-          message: "email has been registered"
+        res.status (200).json ({
+          message: 'email has been registered',
         });
       } else {
         users
-          .findAll({
+          .findAll ({
             where: {
-              username: storeUsername
-            }
+              username: storeUsername,
+            },
           })
-          .then(username => {
+          .then (username => {
             if (username.length > 0) {
-              res.status(200).json({
-                message: "username has been used"
+              res.status (200).json ({
+                message: 'username has been used',
               });
             } else {
-              bcrypt.genSalt(10, (err, salt) => {
+              bcrypt.genSalt (10, (err, salt) => {
                 if (err) {
-                  res.status(400).json({
-                    message: "bad request"
+                  res.status (400).json ({
+                    message: 'bad request',
                   });
                 } else {
-                  bcrypt.hash(storePassword, salt, (err, hash) => {
+                  bcrypt.hash (storePassword, salt, (err, hash) => {
                     if (err) {
-                      res.status(500).json({
-                        message: "server response error"
+                      res.status (500).json ({
+                        message: 'server response error',
                       });
                     } else {
                       users
-                        .create({
+                        .create ({
                           name: storeName,
                           email: storeEmail,
                           phone: storePhone,
                           username: storeUsername,
                           password: hash,
-                          role: role
+                          role: role,
                         })
-                        .then(data => {
+                        .then (data => {
                           if (data) {
-                            const token = jwt.sign({ id: data.id }, "nurdin");
-                            res.status(200).json({
-                              message: "success",
-                              token: token
+                            const token = jwt.sign ({id: data.id}, 'nurdin');
+                            res.status (200).json ({
+                              message: 'success',
+                              token: token,
                             });
                           } else {
-                            res.status(500).json({
-                              message: "add user failed"
+                            res.status (500).json ({
+                              message: 'add user failed',
                             });
                           }
                         });
@@ -77,8 +77,8 @@ exports.register = (req, res) => {
               });
             }
           })
-          .catch(error => {
-            res.status(500).json({ error });
+          .catch (error => {
+            res.status (500).json ({error});
           });
       }
     });
@@ -86,38 +86,38 @@ exports.register = (req, res) => {
 
 exports.login = (req, res) => {
   let storeUsername, storePassword;
-  const { username, password } = req.body;
-  storeUsername = username.trim();
-  storePassword = password.trim();
+  const {username, password} = req.body;
+  storeUsername = username.trim ();
+  storePassword = password.trim ();
   users
-    .findOne({
+    .findOne ({
       where: {
-        username: storeUsername
-      }
+        username: storeUsername,
+      },
     })
-    .then(user => {
+    .then (user => {
       if (user) {
-        bcrypt.compare(storePassword, user.password, (err, isMatch) => {
+        bcrypt.compare (storePassword, user.password, (err, isMatch) => {
           if (err) {
-            res.status(400).json({
-              message: "bad request"
+            res.status (400).json ({
+              message: 'bad request',
             });
           } else if (!isMatch) {
-            res.status(200).json({
-              message: "password doesnt match"
+            res.status (200).json ({
+              message: 'password doesnt match',
             });
           } else {
-            const token = jwt.sign({ id: user.id }, "nurdin");
-            res.status(200).json({
-              message: "success",
+            const token = jwt.sign ({id: user.id}, 'nurdin');
+            res.status (200).json ({
+              message: 'success',
               username: user.username,
-              token: token
+              token: token,
             });
           }
         });
       } else {
-        res.status(200).json({
-          message: "username is not registered"
+        res.status (200).json ({
+          message: 'username is not registered',
         });
       }
     });
@@ -125,47 +125,47 @@ exports.login = (req, res) => {
 
 exports.profile = (req, res) => {
   users
-    .findOne({
+    .findOne ({
       where: {
-        id: req.params.id
-      }
+        id: req.params.id,
+      },
     })
-    .then(data => {
+    .then (data => {
       if (data === null) {
-        res.status(200).json({
-          message: "user not found"
+        res.status (200).json ({
+          message: 'user not found',
         });
       } else {
-        res.status(200).json({
+        res.status (200).json ({
           id: data.id,
           name: data.name,
           phone: data.phone,
           email: data.email,
-          image: data.image
+          image: data.image,
         });
       }
     });
 };
 exports.user = (req, res) => {
   users
-    .findOne({
+    .findOne ({
       where: {
-        id: req.user_id
-      }
+        id: req.user_id,
+      },
     })
-    .then(data => {
+    .then (data => {
       if (data === null) {
-        res.status(200).json({
-          message: "user not found"
+        res.status (200).json ({
+          message: 'user not found',
         });
       } else {
-        res.status(200).json({
+        res.status (200).json ({
           id: data.id,
           name: data.name,
           initial: data.name[0],
           phone: data.phone,
           email: data.email,
-          image: data.image
+          image: data.image,
         });
       }
     });
@@ -173,39 +173,41 @@ exports.user = (req, res) => {
 
 exports.update = (req, res) => {
   users
-    .findOne({
+    .findOne ({
       where: {
-        id: req.params.id
-      }
+        id: parseInt (req.body.id),
+      },
     })
-    .then(data => {
+    .then (data => {
       if (data.id != req.user_id) {
-        res.status(403).json({
-          message: "you are not authorized for this action"
+        res.status (403).json ({
+          message: 'you are not authorized for this action',
         });
       } else {
-        const { name, phone, image } = req.body;
+        const {name, phone, image} = req.body;
         users
-          .update(
+          .update (
             {
               name: name,
               phone: phone,
-              image: image
+              image: image,
             },
             {
               where: {
-                id: req.params.id
-              }
+                id: req.body.id,
+              },
             }
           )
-          .then(status => {
+          .then (status => {
             if (status === 0) {
-              res.status(500).json({
-                message: "update failed"
+              res.status (500).json ({
+                status: 'failed',
+                message: 'update failed',
               });
             } else {
-              res.status(200).json({
-                message: "update user is success"
+              res.status (200).json ({
+                status: 'success',
+                message: 'update user is success',
               });
             }
           });
