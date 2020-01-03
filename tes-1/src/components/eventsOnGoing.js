@@ -56,6 +56,7 @@ class eventsOnGoing extends Component {
         </div>
       );
     } else {
+      const token = localStorage.getItem("token");
       return (
         <div>
           <Container style={{ marginTop: "40px" }}>
@@ -117,7 +118,7 @@ class eventsOnGoing extends Component {
                                 : event.title}
                             </Typography>
                           </Link>
-                          <ButtonFav event_id={event.id} />
+                          {token ? <ButtonFav event_id={event.id} /> : ""}
                         </div>
                         <Typography
                           variant="body2"

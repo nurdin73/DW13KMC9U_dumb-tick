@@ -10,6 +10,7 @@ import MyTicket from "./Pages/my-ticket";
 import Payment from "./Pages/payment";
 import AddEvent from "./Pages/add-event";
 import EditProfile from "./Pages/editProfile";
+import EventByTitle from "./Pages/eventByTitle";
 export default class App extends Component {
   render() {
     if (localStorage.getItem("token") != null) {
@@ -23,6 +24,12 @@ export default class App extends Component {
           >
             <HeaderLogin />
             <Switch>
+              <Route path="/events?title=">
+                <EventByTitle />
+              </Route>
+              <Route path="/events">
+                <EventByTitle />
+              </Route>
               <Route path="/edit-profile">
                 <EditProfile />
               </Route>
@@ -70,7 +77,10 @@ export default class App extends Component {
             <Header />
             <Switch>
               <Route path="/events?title=">
-                <h1>asdasdasd</h1>
+                <EventByTitle />
+              </Route>
+              <Route path="/events">
+                <EventByTitle />
               </Route>
               <Route path="/event/:id">
                 <Event />

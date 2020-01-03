@@ -40,6 +40,7 @@ class App extends Component {
 
   render() {
     const { event } = this.props.event;
+    const token = localStorage.getItem("token");
     // console.log (this.formatDate (event.startTime));
     if (event.success === false) {
       return (
@@ -114,11 +115,15 @@ class App extends Component {
                     xs={1}
                     style={{ display: "flex", justifyContent: "center" }}
                   >
-                    <BuyDialog
-                      price={event.priceNumber}
-                      quantity="1"
-                      event_id={event.id}
-                    />
+                    {token ? (
+                      <BuyDialog
+                        price={event.priceNumber}
+                        quantity="1"
+                        event_id={event.id}
+                      />
+                    ) : (
+                      ""
+                    )}
                   </Grid>
                 </Grid>
                 <Divider style={{ height: "3px", marginBottom: "20px" }} />
