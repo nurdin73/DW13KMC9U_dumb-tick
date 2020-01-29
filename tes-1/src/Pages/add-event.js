@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Footer from "../components/footer";
 import {
   Container,
@@ -6,7 +6,8 @@ import {
   FormHelperText,
   Input,
   InputLabel,
-  Button
+  Button,
+  Typography
 } from "@material-ui/core";
 import { useForm } from "react-hook-form";
 import { connect } from "react-redux";
@@ -14,9 +15,12 @@ import { getCategories } from "../_actions/categories";
 import { addEvent } from "../_actions/event";
 function AddEvent(props) {
   const { handleSubmit, register, errors } = useForm();
+  const [message, setMessage] = useState({
+    value: ""
+  });
   const onSubmit = values => {
     props.addEvent(values);
-    setTimeout(() => 3000);
+    setMessage({ value: "add event success" });
   };
   const { data } = props.categories;
   const { addEvent } = props.addEvent;
@@ -24,13 +28,23 @@ function AddEvent(props) {
   //   if (addEvent.status === "failed") {
   //     alert(addEvent.message);
   //   } else {
-  //     window.location.href = "http://localhost:3000/profile";
+  // window.location.href = "http://localhost:3000/profile";
   //   }
 
   return (
     <div>
       <Container maxWidth="md">
         <h1 style={{ color: "#ec473a" }}>Add Event</h1>
+        <div
+          style={{
+            backgroundColor: "#b71c1c",
+            padding: "10px",
+            color: "#fff",
+            textAlign: "center"
+          }}
+        >
+          <Typography variant="h5">{message.value}</Typography>
+        </div>
         <form autoComplete="off" onSubmit={handleSubmit(onSubmit)}>
           <FormControl fullWidth style={{ marginBottom: "15px" }}>
             <InputLabel htmlFor="title">Title Event</InputLabel>

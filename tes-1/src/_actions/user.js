@@ -7,7 +7,7 @@ export const setUsers = data => {
     type: REGISTER,
     payload: axios ({
       method: 'post',
-      url: `http://localhost:5000/api/v1/register`,
+      url: `https://dumtick-app.herokuapp.com/api/v1/register`,
       data: data,
     }),
   };
@@ -18,7 +18,7 @@ export const setLogin = data => {
     type: LOGIN,
     payload: axios ({
       method: 'post',
-      url: `http://localhost:5000/api/v1/login`,
+      url: `https://dumtick-app.herokuapp.com/api/v1/login`,
       data: data,
     }),
   };
@@ -30,7 +30,7 @@ export const getProfile = () => {
     type: PROFILE,
     payload: axios ({
       method: 'get',
-      url: `http://localhost:5000/api/v1/user`,
+      url: `https://dumtick-app.herokuapp.com/api/v1/user`,
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -45,7 +45,7 @@ export const setProfile = values => {
     type: UPDATE_PROFILE,
     payload: axios ({
       method: 'patch',
-      url: `http://localhost:5000/api/v1/profile`,
+      url: `https://dumtick-app.herokuapp.com/api/v1/profile`,
       headers: {
         Authorization: `Bearer ${token}`,
       },

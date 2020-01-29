@@ -60,7 +60,7 @@ export const getEvents = () => {
     type: GET_EVENTS,
     payload: axios({
       method: "get",
-      url: `http://localhost:5000/api/v1/events?start_time=${tgl}&end_time=${endTgl}`
+      url: `https://dumtick-app.herokuapp.com/api/v1/events?start_time=${tgl}&end_time=${endTgl}`
     })
   };
 };
@@ -70,7 +70,7 @@ export const getEventOngoing = () => {
     type: GET_EVENTS_ON_GOING,
     payload: axios({
       method: "get",
-      url: `http://localhost:5000/api/v1/ongoing?startTime=${onGoing}`
+      url: `https://dumtick-app.herokuapp.com/api/v1/ongoing?startTime=${onGoing}`
     })
   };
 };

@@ -7,7 +7,7 @@ export const getEvent = event_id => {
     type: GET_EVENT,
     payload: axios({
       method: "get",
-      url: `http://localhost:5000/api/v1/event/${event_id}`
+      url: `https://dumtick-app.herokuapp.com/api/v1/event/${event_id}`
     })
   };
 };
@@ -19,7 +19,7 @@ export const addEvent = data => {
     type: ADD_EVENT,
     payload: axios({
       method: "post",
-      url: `http://localhost:5000/api/v1/event`,
+      url: `https://dumtick-app.herokuapp.com/api/v1/event`,
       data: data,
       headers: {
         Authorization: `Bearer ${token}`

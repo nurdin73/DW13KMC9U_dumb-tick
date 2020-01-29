@@ -17,7 +17,7 @@ class ButtonFav extends Component {
     event.preventDefault();
     Axios({
       method: "post",
-      url: "http://localhost:5000/api/v1/favorite",
+      url: "https://dumtick-app.herokuapp.com/api/v1/favorite",
       data: {
         event_id: id
       },
@@ -37,7 +37,7 @@ class ButtonFav extends Component {
     event.preventDefault();
     Axios({
       method: "delete",
-      url: "http://localhost:5000/api/v1/favorite",
+      url: "https://dumtick-app.herokuapp.com/api/v1/favorite",
       data: {
         event_id: id
       },
@@ -58,7 +58,7 @@ class ButtonFav extends Component {
 
     Axios({
       method: "get",
-      url: "http://localhost:5000/api/v1/user/favorite",
+      url: "https://dumtick-app.herokuapp.com/api/v1/user/favorite",
       headers: {
         Authorization: `Bearer ${token}`
       }

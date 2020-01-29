@@ -20,7 +20,7 @@ function Events(props) {
   });
   let query = useQuery();
   const token = localStorage.getItem("token");
-  const API = `http://localhost:5000/api/v1/events?title=${query.get("title")}`;
+  const API = `https://dumtick-app.herokuapp.com/api/v1/events?title=${query.get("title")}`;
 
   useEffect(() => {
     const fetchData = async () => {

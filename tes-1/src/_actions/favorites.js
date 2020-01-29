@@ -7,7 +7,7 @@ export const getFavorites = () => {
     type: FAVORITES,
     payload: axios({
       method: "get",
-      url: `http://localhost:5000/api/v1/user/favorites`,
+      url: `https://dumtick-app.herokuapp.com/api/v1/user/favorites`,
       headers: {
         Authorization: `Bearer ${token}`
       }

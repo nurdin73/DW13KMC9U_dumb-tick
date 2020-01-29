@@ -23,7 +23,7 @@ export default function AlertDialog(props) {
     const token = localStorage.getItem("token");
     Axios({
       method: "patch",
-      url: `http://localhost:5000/api/v1/order/${id}`,
+      url: `https://dumtick-app.herokuapp.com/api/v1/order/${id}`,
       data: {
         status: "confirmed"
       },

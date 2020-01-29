@@ -6,7 +6,7 @@ export const getCategories = () => {
     type: GET_CATEGORIES,
     payload: axios({
       method: "get",
-      url: "http://localhost:5000/api/v1/categories"
+      url: "https://dumtick-app.herokuapp.com/api/v1/categories"
     })
   };
 };

@@ -7,7 +7,7 @@ export const getTicket = () => {
     type: PAYMENTS,
     payload: axios({
       method: "get",
-      url: `http://localhost:5000/api/v1/order?status=approved`,
+      url: `https://dumtick-app.herokuapp.com/api/v1/order?status=approved`,
       headers: {
         Authorization: `Bearer ${token}`
       }
@@ -21,7 +21,7 @@ export const getPayment = () => {
     type: GET_PAYMENT,
     payload: axios({
       method: "get",
-      url: `http://localhost:5000/api/v1/payment`,
+      url: `https://dumtick-app.herokuapp.com/api/v1/payment`,
       headers: {
         Authorization: `Bearer ${token}`
       }
@@ -35,7 +35,7 @@ export const setOrder = data => {
     type: ADD_PAYMENT,
     payload: axios({
       method: "post",
-      url: `http://localhost:5000/api/v1/event/order`,
+      url: `https://dumtick-app.herokuapp.com/api/v1/event/order`,
       headers: {
         Authorization: `Bearer ${token}`
       },
